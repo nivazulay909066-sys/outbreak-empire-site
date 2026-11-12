@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Outbreak Empire – Survival strategy for mobile</title>
-<meta name="description" content="Eighteen months after the Fall. Raise a settlement from the ruins, keep your people alive, and fight for your place in one shared world. A survival strategy game for mobile, in development.">
-<meta name="theme-color" content="#111215">
+<title>Outbreak Empire – Coming soon to Android &amp; iOS</title>
+<meta name="description" content="Eighteen months after the Fall. Raise a settlement from the ruins, keep your people alive, and fight for your place in one shared world. Coming soon to Android and iOS.">
+<meta name="theme-color" content="#0b0b0c">
 <link rel="canonical" href="https://nivazulay909066-sys.github.io/outbreak-empire-site/">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Outbreak Empire">
 <meta property="og:title" content="Outbreak Empire – Build what's left">
-<meta property="og:description" content="Eighteen months after the Fall. A survival strategy game for mobile. Join the closed test waitlist.">
+<meta property="og:description" content="Eighteen months after the Fall. A survival strategy game coming to Android and iOS. Join the waitlist.">
 <meta property="og:url" content="https://nivazulay909066-sys.github.io/outbreak-empire-site/">
 <meta property="og:image" content="https://nivazulay909066-sys.github.io/outbreak-empire-site/images/og.jpg">
 <meta property="og:image:width" content="1200">
@@ -19,7 +19,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@OutbreakEmpGame">
 <meta name="twitter:title" content="Outbreak Empire – Build what's left">
-<meta name="twitter:description" content="Eighteen months after the Fall. A survival strategy game for mobile. Join the closed test waitlist.">
+<meta name="twitter:description" content="Eighteen months after the Fall. A survival strategy game coming to Android and iOS. Join the waitlist.">
 <meta name="twitter:image" content="https://nivazulay909066-sys.github.io/outbreak-empire-site/images/og.jpg">
 
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -27,21 +27,28 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil:wght@800&family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Barlow+Condensed:wght@500;600&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="images/hero-800.webp" imagesrcset="images/hero-800.webp 800w, images/hero-1600.webp 1600w" imagesizes="100vw">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header class="bar" id="top">
-  <div class="bar__in">
-    <a class="mark" href="#top" aria-label="Outbreak Empire, back to top">Outbreak<b>Empire</b></a>
-    <nav class="nav" aria-label="Main">
-      <a href="#features">Features</a>
-      <a href="#coalitions">Coalitions</a>
-      <a href="#faq">FAQ</a>
-    </nav>
-    <a class="btn btn--gold btn--sm bar__cta" href="https://docs.google.com/forms/d/e/1FAIpQLSfH-3bDS25boa_nsmfyrVO0cmh-lTgv2Yjuh53AL0fX4bEYbQ/viewform" target="_blank" rel="noopener">Join waitlist</a>
+<header class="nav" id="top">
+  <a class="nav__logo" href="#top" aria-label="Outbreak Empire, back to top">
+    <span class="logo logo--sm"><span class="logo__a">Outbreak</span><span class="logo__b">Empire</span></span>
+  </a>
+  <nav class="nav__links" aria-label="Main">
+    <a href="#world">The World</a>
+    <a href="#features">Features</a>
+    <a href="#media">Media</a>
+    <a href="#community">Community</a>
+  </nav>
+  <div class="nav__end">
+    <ul class="soc soc--nav">
+      <li><a href="https://discord.gg/R8zea6GDbc" target="_blank" rel="noopener" aria-label="Discord"><span class="ico ico--discord"></span></a></li>
+      <li><a href="https://x.com/OutbreakEmpGame" target="_blank" rel="noopener" aria-label="X"><span class="ico ico--x"></span></a></li>
+    </ul>
+    <a class="btn btn--sm" href="https://docs.google.com/forms/d/e/1FAIpQLSfH-3bDS25boa_nsmfyrVO0cmh-lTgv2Yjuh53AL0fX4bEYbQ/viewform" target="_blank" rel="noopener">Join waitlist</a>
   </div>
 </header>
 
@@ -49,199 +56,155 @@
 
   <!-- HERO -->
   <section class="hero">
-    <img class="hero__img" src="images/hero-800.webp" srcset="images/hero-800.webp 800w, images/hero-1600.webp 1600w"
-         sizes="100vw" alt="" fetchpriority="high" decoding="async">
+    <div class="hero__media">
+      <img src="images/hero-800.webp" srcset="images/hero-800.webp 800w, images/hero-1600.webp 1600w"
+           sizes="100vw" alt="" fetchpriority="high" decoding="async">
+    </div>
     <canvas class="embers" aria-hidden="true"></canvas>
     <div class="hero__in">
-      <p class="tag">Day 547 &middot; Eighteen months after the Fall</p>
-      <h1>Build what's&nbsp;left.</h1>
-      <p class="hero__lead">A survival strategy game for mobile. Raise a settlement from the ruins, keep your people alive, and fight for your place in one shared world.</p>
-      <div class="cta">
-        <a class="btn btn--gold" href="https://docs.google.com/forms/d/e/1FAIpQLSfH-3bDS25boa_nsmfyrVO0cmh-lTgv2Yjuh53AL0fX4bEYbQ/viewform" target="_blank" rel="noopener">Join the closed test waitlist</a>
-        <a class="btn btn--ghost" href="https://discord.gg/R8zea6GDbc" target="_blank" rel="noopener"><span class="ico ico--discord" aria-hidden="true"></span>Discord</a>
-      </div>
-      <p class="hero__meta">Android &amp; iOS &middot; In development</p>
-    </div>
-    <a class="scroll" href="#story" aria-label="Scroll down"></a>
-  </section>
-
-  <!-- STORY -->
-  <section class="story" id="story">
-    <div class="wrap">
-      <div class="radio">
-        <p class="radio__head"><span class="rec" aria-hidden="true"></span>Intercepted broadcast</p>
-        <p>The city was evacuated in a hurry. The army held on for a few more weeks, then pulled out&nbsp;&mdash; leaving checkpoints, abandoned bases and gear behind.</p>
-        <p>What's left are small communities, makeshift trading posts, gangs, militias. And the hordes, drawn to every sound.</p>
-        <p>Nobody knows what caused it. Nobody is coming.</p>
-        <p class="radio__end">If you can hear this, start building.</p>
+      <h1 class="logo logo--xl"><span class="logo__a">Outbreak</span><span class="logo__b">Empire</span></h1>
+      <p class="hero__line">Eighteen months after the Fall. Build what's left.</p>
+      <a class="btn btn--lg" href="https://docs.google.com/forms/d/e/1FAIpQLSfH-3bDS25boa_nsmfyrVO0cmh-lTgv2Yjuh53AL0fX4bEYbQ/viewform" target="_blank" rel="noopener">Join the waitlist</a>
+      <div class="stores" aria-label="Platforms">
+        <span class="store"><span class="ico ico--apple" aria-hidden="true"></span><span><small>Coming soon on</small>iOS</span></span>
+        <span class="store"><span class="ico ico--android" aria-hidden="true"></span><span><small>Coming soon on</small>Android</span></span>
       </div>
     </div>
+    <a class="hero__down" href="#world" aria-label="Scroll down"><span></span></a>
   </section>
 
-  <!-- FEATURES -->
-  <section class="features" id="features">
-    <div class="wrap">
-      <header class="head">
-        <p class="kicker">What you'll do</p>
-        <h2>Survival is the game.<br>Strategy is how you win it.</h2>
-      </header>
-
-      <article class="row">
-        <figure class="row__img">
-          <img src="images/winter-800.webp" srcset="images/winter-800.webp 800w, images/winter-1600.webp 1448w"
-               sizes="(min-width: 900px) 55vw, 100vw" width="800" height="600" loading="lazy" decoding="async"
-               alt="A snowed-in settlement: trucks of logs and food, water tanks, a furnace">
-        </figure>
-        <div class="row__txt">
-          <span class="num">01</span>
-          <h3>Survivors, not numbers</h3>
-          <p>Every survivor has a trade. Keep them fed, watered, warm and healthy&nbsp;&mdash; or watch morale crack.</p>
-          <p>When winter comes, wood and fuel are the difference between a settlement and a graveyard.</p>
-        </div>
-      </article>
-
-      <article class="row row--flip">
-        <figure class="row__img">
-          <img src="images/convoy-800.webp" srcset="images/convoy-800.webp 800w, images/convoy-1600.webp 1600w"
-               sizes="(min-width: 900px) 55vw, 100vw" width="800" height="450" loading="lazy" decoding="async"
-               alt="Survivors ambush a supply convoy on a ruined highway">
-        </figure>
-        <div class="row__txt">
-          <span class="num">02</span>
-          <h3>Every crate travels</h3>
-          <p>Trade is physical. Goods cross the map by convoy, and any convoy can be hit.</p>
-          <p>Guard yours. Take theirs. Prisoners can be ransomed.</p>
-        </div>
-      </article>
+  <!-- WORLD -->
+  <section class="world" id="world">
+    <div class="world__in">
+      <h2 class="title">The world ended.<br>You didn't.</h2>
+      <div class="rule" aria-hidden="true"></div>
+      <p>The city was evacuated in a hurry. The army held on a few more weeks, then pulled out, leaving checkpoints, abandoned bases and gear behind. What's left are small communities, makeshift trading posts, gangs and militias. And the hordes, drawn to every sound.</p>
+      <p class="world__end">Nobody knows what caused it. Nobody is coming.</p>
     </div>
   </section>
 
-  <!-- HORDE BAND -->
-  <section class="band" aria-labelledby="horde-h">
-    <img class="band__img" src="images/horde-800.webp" srcset="images/horde-800.webp 800w, images/horde-1600.webp 1600w"
-         sizes="100vw" loading="lazy" decoding="async" alt="Defenders on a barricaded wall as a horde crosses the field at sunset">
-    <div class="wrap band__in">
-      <span class="num">03</span>
-      <h2 id="horde-h">The horde hears you.</h2>
-      <p>The dead are drawn to the noise your settlement makes. They come on their own, and they change over time. Build quiet, build strong&nbsp;&mdash; or be ready.</p>
-    </div>
-  </section>
-
-  <!-- COALITIONS -->
-  <section class="coal" id="coalitions">
-    <div class="wrap coal__grid">
-      <div class="coal__txt">
-        <p class="kicker">The heart of the game</p>
-        <h2>Nobody holds the line alone.</h2>
-        <p>Join a coalition and plan together on a map that moves in real time: every army, convoy and horde, live.</p>
-        <ul class="ticks">
-          <li>Send help when a friend is under siege</li>
-          <li>Take NPC settlements</li>
-          <li>Fight for special places on the map</li>
-        </ul>
-      </div>
-      <figure class="coal__img">
-        <img src="images/warroom-800.webp" srcset="images/warroom-800.webp 800w, images/warroom-1600.webp 1600w"
-             sizes="(min-width: 900px) 58vw, 100vw" width="800" height="450" loading="lazy" decoding="async"
+  <!-- FEATURES (tabbed showcase) -->
+  <section class="show" id="features" aria-label="Features">
+    <div class="show__slides">
+      <figure class="slide is-on" id="f-survive" role="tabpanel" aria-labelledby="t-survive">
+        <img src="images/winter-800.webp" srcset="images/winter-800.webp 800w, images/winter-1600.webp 1448w" sizes="100vw" loading="lazy" decoding="async"
+             alt="A snowed-in settlement with trucks of logs and food, water tanks and a furnace">
+        <figcaption class="slide__cap">
+          <h3 class="title">Survive</h3>
+          <p>Every survivor has a trade. Keep them fed, watered, warm and healthy, or watch morale crack. When winter comes, fuel is the difference between a settlement and a graveyard.</p>
+        </figcaption>
+      </figure>
+      <figure class="slide" id="f-raid" role="tabpanel" aria-labelledby="t-raid">
+        <img src="images/convoy-800.webp" srcset="images/convoy-800.webp 800w, images/convoy-1600.webp 1600w" sizes="100vw" loading="lazy" decoding="async"
+             alt="Survivors ambush a supply convoy on a ruined highway">
+        <figcaption class="slide__cap">
+          <h3 class="title">Raid</h3>
+          <p>Trade is physical. Goods cross the map by convoy, and any convoy can be hit. Guard yours, take theirs. Prisoners can be ransomed.</p>
+        </figcaption>
+      </figure>
+      <figure class="slide" id="f-defend" role="tabpanel" aria-labelledby="t-defend">
+        <img src="images/horde-800.webp" srcset="images/horde-800.webp 800w, images/horde-1600.webp 1600w" sizes="100vw" loading="lazy" decoding="async"
+             alt="Defenders on a barricaded wall as a horde crosses the field at sunset">
+        <figcaption class="slide__cap">
+          <h3 class="title">Defend</h3>
+          <p>The dead are drawn to the noise your settlement makes. They come on their own, and they change over time. Build your walls before they hear you.</p>
+        </figcaption>
+      </figure>
+      <figure class="slide" id="f-unite" role="tabpanel" aria-labelledby="t-unite">
+        <img src="images/warroom-800.webp" srcset="images/warroom-800.webp 800w, images/warroom-1600.webp 1600w" sizes="100vw" loading="lazy" decoding="async"
              alt="Survivors around a map table planning a strike">
+        <figcaption class="slide__cap">
+          <h3 class="title">Unite</h3>
+          <p>Nobody holds the line alone. Join a coalition, send help when a friend is under siege, take NPC settlements and fight for the places that matter, on a map that moves in real time.</p>
+        </figcaption>
       </figure>
     </div>
+    <div class="tabs" role="tablist" aria-label="Features">
+      <button class="tab is-on" id="t-survive" role="tab" aria-selected="true" aria-controls="f-survive"><span>Survive</span><i></i></button>
+      <button class="tab" id="t-raid" role="tab" aria-selected="false" aria-controls="f-raid"><span>Raid</span><i></i></button>
+      <button class="tab" id="t-defend" role="tab" aria-selected="false" aria-controls="f-defend"><span>Defend</span><i></i></button>
+      <button class="tab" id="t-unite" role="tab" aria-selected="false" aria-controls="f-unite"><span>Unite</span><i></i></button>
+    </div>
   </section>
 
-  <!-- GROWTH -->
-  <section class="grow" aria-labelledby="grow-h">
-    <div class="wrap">
-      <header class="head">
-        <p class="kicker">From tents to towers</p>
-        <h2 id="grow-h">Camp to metropolis.</h2>
-      </header>
-      <ol class="steps">
-        <li><img src="assets/growth-1.svg" alt="" width="120" height="82" loading="lazy"><span>Camp</span></li>
-        <li><img src="assets/growth-2.svg" alt="" width="120" height="82" loading="lazy"><span>Settlement</span></li>
-        <li><img src="assets/growth-3.svg" alt="" width="120" height="82" loading="lazy"><span>Village</span></li>
-        <li><img src="assets/growth-4.svg" alt="" width="120" height="82" loading="lazy"><span>Fortified city</span></li>
-        <li><img src="assets/growth-5.svg" alt="" width="120" height="82" loading="lazy"><span>Regional city</span></li>
-        <li><img src="assets/growth-6.svg" alt="" width="120" height="82" loading="lazy"><span>Metropolis</span></li>
-      </ol>
-      <div class="pledges">
-        <div><h3>One world. No resets.</h3><p>The world keeps going. What you build stays built.</p></div>
-        <div><h3>Lose a battle, not everything.</h3><p>An army can be wiped out. Your headquarters and your core always survive.</p></div>
-        <div><h3>Built in the open.</h3><p>One indie developer, sharing the work as it happens.</p></div>
+  <!-- PROMISES -->
+  <section class="vow">
+    <div class="vow__in">
+      <div class="vow__item">
+        <h3 class="title">One world</h3>
+        <p>A persistent world that never resets. What you build stays built.</p>
+      </div>
+      <div class="vow__item">
+        <h3 class="title">Camp to metropolis</h3>
+        <p>Start with tents in the ruins. Grow into a city others fear.</p>
+      </div>
+      <div class="vow__item">
+        <h3 class="title">Never wiped out</h3>
+        <p>Armies fall. Your headquarters and your core always survive.</p>
       </div>
     </div>
   </section>
 
-  <!-- SIGNUP -->
-  <section class="join" id="signup">
-    <div class="wrap join__in">
-      <h2>Be first through the gate.</h2>
-      <p>The closed test is coming. Leave your email and we'll tell you when signups open.</p>
-      <a class="btn btn--gold btn--lg" href="https://docs.google.com/forms/d/e/1FAIpQLSfH-3bDS25boa_nsmfyrVO0cmh-lTgv2Yjuh53AL0fX4bEYbQ/viewform" target="_blank" rel="noopener">Join the waitlist</a>
-      <p class="fine">Opens a short Google Form. We only email you about the test.</p>
+  <!-- MEDIA -->
+  <section class="media" id="media">
+    <div class="media__in">
+      <h2 class="title">Concept art</h2>
+      <div class="rule" aria-hidden="true"></div>
+      <div class="gal">
+        <button class="gal__item gal__item--wide" data-full="images/hero-1600.webp" aria-label="View: leaving the gate">
+          <img src="images/hero-800.webp" alt="A squad of survivors leaving the settlement gate" loading="lazy" decoding="async"></button>
+        <button class="gal__item" data-full="images/horde-1600.webp" aria-label="View: the wall at sunset">
+          <img src="images/horde-800.webp" alt="Defenders on the wall as the horde approaches" loading="lazy" decoding="async"></button>
+        <button class="gal__item" data-full="images/convoy-1600.webp" aria-label="View: the ambush">
+          <img src="images/convoy-800.webp" alt="A convoy ambush on the highway" loading="lazy" decoding="async"></button>
+        <button class="gal__item" data-full="images/warroom-1600.webp" aria-label="View: the war room">
+          <img src="images/warroom-800.webp" alt="Coalition leaders around the map table" loading="lazy" decoding="async"></button>
+        <button class="gal__item" data-full="images/winter-1600.webp" aria-label="View: winter">
+          <img src="images/winter-800.webp" alt="The settlement in deep winter" loading="lazy" decoding="async"></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRE-REGISTER -->
+  <section class="pre" id="signup">
+    <div class="pre__bg" aria-hidden="true">
+      <img src="images/horde-800.webp" srcset="images/horde-800.webp 800w, images/horde-1600.webp 1600w" sizes="100vw" alt="" loading="lazy" decoding="async">
+    </div>
+    <div class="pre__in">
+      <h2 class="title">Be first through the gate</h2>
+      <p>The closed test is coming. Join the waitlist and we'll let you know the moment it opens.</p>
+      <a class="btn btn--lg" href="https://docs.google.com/forms/d/e/1FAIpQLSfH-3bDS25boa_nsmfyrVO0cmh-lTgv2Yjuh53AL0fX4bEYbQ/viewform" target="_blank" rel="noopener">Join the waitlist</a>
     </div>
   </section>
 
   <!-- COMMUNITY -->
   <section class="comm" id="community">
-    <div class="wrap comm__in">
-      <div>
-        <h2>Join the survivors.</h2>
-        <p>Devlogs, work in progress and first word on playtests.</p>
-      </div>
-      <div class="comm__links">
-        <a class="btn btn--discord" href="https://discord.gg/R8zea6GDbc" target="_blank" rel="noopener"><span class="ico ico--discord" aria-hidden="true"></span>Join the Discord</a>
-        <ul class="soc">
-          <li><a href="https://x.com/OutbreakEmpGame" target="_blank" rel="noopener" aria-label="X"><span class="ico ico--x"></span></a></li>
-          <li><a href="https://www.tiktok.com/@playoutbreakempire" target="_blank" rel="noopener" aria-label="TikTok"><span class="ico ico--tiktok"></span></a></li>
-          <li><a href="https://www.reddit.com/user/OutbreakEmpire" target="_blank" rel="noopener" aria-label="Reddit"><span class="ico ico--reddit"></span></a></li>
-          <li><a href="https://www.instagram.com/outbreakempire/" target="_blank" rel="noopener" aria-label="Instagram"><span class="ico ico--instagram"></span></a></li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <section class="faq" id="faq">
-    <div class="wrap faq__in">
-      <h2>Questions</h2>
-      <details>
-        <summary>What is Outbreak Empire?</summary>
-        <p>A multiplayer survival strategy game for mobile. You build a settlement, manage your people and resources, raise an army, trade, fight, and join a coalition, all in one shared world that never resets.</p>
-      </details>
-      <details>
-        <summary>Which platforms?</summary>
-        <p>Android and iOS.</p>
-      </details>
-      <details>
-        <summary>When can I play?</summary>
-        <p>There's no release date yet. Join the waitlist or the Discord to hear first when closed test signups open.</p>
-      </details>
-      <details>
-        <summary>Can I lose everything?</summary>
-        <p>No. Losses hurt, and an army can be wiped out, but your headquarters and the core of your settlement always survive, and there is always a way back.</p>
-      </details>
-      <details>
-        <summary>Who's making it?</summary>
-        <p>A solo indie developer, building it in the open. Follow along on Discord and X.</p>
-      </details>
+    <div class="comm__in">
+      <h2 class="title">Follow the outbreak</h2>
+      <ul class="soc soc--big">
+        <li><a href="https://discord.gg/R8zea6GDbc" target="_blank" rel="noopener"><span class="ico ico--discord" aria-hidden="true"></span>Discord</a></li>
+        <li><a href="https://x.com/OutbreakEmpGame" target="_blank" rel="noopener"><span class="ico ico--x" aria-hidden="true"></span>X</a></li>
+        <li><a href="https://www.tiktok.com/@playoutbreakempire" target="_blank" rel="noopener"><span class="ico ico--tiktok" aria-hidden="true"></span>TikTok</a></li>
+        <li><a href="https://www.instagram.com/outbreakempire/" target="_blank" rel="noopener"><span class="ico ico--instagram" aria-hidden="true"></span>Instagram</a></li>
+        <li><a href="https://www.reddit.com/user/OutbreakEmpire" target="_blank" rel="noopener"><span class="ico ico--reddit" aria-hidden="true"></span>Reddit</a></li>
+      </ul>
     </div>
   </section>
 
 </main>
 
 <footer class="foot">
-  <div class="wrap foot__in">
-    <a class="mark mark--sm" href="#top">Outbreak<b>Empire</b></a>
-    <ul class="soc soc--sm">
-      <li><a href="https://discord.gg/R8zea6GDbc" target="_blank" rel="noopener" aria-label="Discord"><span class="ico ico--discord"></span></a></li>
-      <li><a href="https://x.com/OutbreakEmpGame" target="_blank" rel="noopener" aria-label="X"><span class="ico ico--x"></span></a></li>
-      <li><a href="https://www.tiktok.com/@playoutbreakempire" target="_blank" rel="noopener" aria-label="TikTok"><span class="ico ico--tiktok"></span></a></li>
-      <li><a href="https://www.reddit.com/user/OutbreakEmpire" target="_blank" rel="noopener" aria-label="Reddit"><span class="ico ico--reddit"></span></a></li>
-      <li><a href="https://www.instagram.com/outbreakempire/" target="_blank" rel="noopener" aria-label="Instagram"><span class="ico ico--instagram"></span></a></li>
-    </ul>
-    <p class="foot__small">Images on this site are concept art, not in-game footage. &copy; 2026 Outbreak Empire.</p>
+  <div class="foot__in">
+    <span class="logo logo--md"><span class="logo__a">Outbreak</span><span class="logo__b">Empire</span></span>
+    <p>Coming soon to Android and iOS.</p>
+    <p class="foot__small">Images shown are concept art and do not represent final in-game visuals.<br>&copy; 2026 Outbreak Empire. All rights reserved.</p>
   </div>
 </footer>
+
+<dialog class="lb" aria-label="Image viewer">
+  <img alt="">
+  <button class="lb__x" aria-label="Close">&times;</button>
+</dialog>
 
 <script src="main.js" defer></script>
 </body>
