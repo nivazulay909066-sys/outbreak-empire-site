@@ -3,7 +3,7 @@
 Plain static site (HTML + CSS + a few lines of JS). No build step except images.
 
 ## Images
-1. Put `army.jpg`, `building.jpg`, `horde.jpg`, `raid.jpg`, `coalition.jpg` in `images/src/`
+1. Put `hero`, `horde`, `convoy`, `warroom`, `winter` (png, jpg or webp) in `images/src/`
    (optional: `icon.png` for the iPhone home-screen icon).
 2. Run `python tools/build_images.py` (needs `pip install pillow`).
    It writes compressed WebP files, `og.jpg` (share image) and `apple-touch-icon.png` into `images/`.
