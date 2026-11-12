@@ -17,3 +17,8 @@ The canonical, Open Graph and Twitter URLs in `index.html` point to
 If the repo name or domain changes, search-and-replace that address.
 
 Icons: Simple Icons (CC0).
+
+## Logo
+
+Put the logo (flat near-black background) at `images/src/logo.jpg`, then run `python -I tools/build_logo.py` **after** `build_images.py`.
+It writes the transparent `logo-*.webp`, `logo-word-360.webp`, and overwrites `og.jpg` and `apple-touch-icon.png` with logo versions.
