@@ -10,7 +10,7 @@
   onScroll();
 
   // Reveal blocks as they enter the screen.
-  var items = document.querySelectorAll('.world__in, .vow__item, .media__in, .pre__in, .comm');
+  var items = document.querySelectorAll('.world__in, .grow__in, .media__in, .pre__in, .comm');
   if ('IntersectionObserver' in window && !still) {
     var io = new IntersectionObserver(function (es) {
       es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
