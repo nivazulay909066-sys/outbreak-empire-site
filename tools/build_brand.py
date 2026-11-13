@@ -103,6 +103,40 @@ def grain(size=160, seed=3):
     return im
 
 
+def hero_depth():
+    """A rough, hand-drawn depth map of the hero picture (white = close to the lens).
+    The page uses it to shift near and far parts by different amounts, so the picture has depth.
+    Coordinates are fractions of the picture; the heavy blur hides the rough edges."""
+    W, H = 512, 288
+    m = Image.new("L", (W, H), 0)
+    px = m.load()
+    for y in range(H):  # the ground comes toward the lens from the horizon down
+        v = y / H
+        g = 0 if v < .42 else round(255 * min(.95, .28 + (v - .42) / .58 * .7))
+        for x in range(W):
+            px[x, y] = g
+    d = ImageDraw.Draw(m)
+    box = lambda x0, y0, x1, y1, v: d.rectangle([x0 * W, y0 * H, x1 * W, y1 * H], fill=round(v * 255))
+    oval = lambda x0, y0, x1, y1, v: d.ellipse([x0 * W, y0 * H, x1 * W, y1 * H], fill=round(v * 255))
+    box(.62, .10, 1, .36, .08)        # far skyline
+    box(.74, .20, 1, .36, .16)        # the overpass
+    box(.22, .00, .62, .44, .34)      # the gate and its bridge
+    box(.00, .00, .22, .60, .50)      # the near wall of the gate
+    box(.22, .30, .39, .50, .32)      # the truck
+    box(.88, .40, 1, .62, .48)        # wrecked car, right
+    box(.90, .64, 1, .90, .80)        # wrecked car, front right
+    oval(.21, .44, .30, .76, .46)     # squad, back row
+    oval(.28, .41, .37, .86, .52)
+    oval(.44, .38, .52, .70, .50)
+    oval(.67, .40, .75, .70, .50)
+    oval(.35, .37, .47, 1.1, .64)     # the bearded man
+    oval(.00, .58, .24, 1.1, .86)     # grass, front left
+    oval(.73, .38, .92, 1.2, .84)     # the woman, front right
+    oval(.42, .40, .76, 1.3, .95)     # the leader: body
+    oval(.55, .26, .69, .50, .95)     # the leader: head
+    return m.filter(ImageFilter.GaussianBlur(9))
+
+
 def share_image():
     src = next(p for p in (ROOT / "images" / "src").glob("hero.*"))
     im = ImageOps.fit(Image.open(src).convert("RGB"), (1200, 630), Image.LANCZOS, centering=(.72, .32))
@@ -131,8 +165,9 @@ def main():
     monogram(48, 8).save(ROOT / "favicon.ico", sizes=[(16, 16), (32, 32), (48, 48)])
     wear_mask().save(OUT / "wear.png", optimize=True)
     grain().save(OUT / "grain.png", optimize=True)
+    hero_depth().save(OUT / "hero-depth.jpg", "JPEG", quality=72, optimize=True)
     share_image().save(OUT / "og.jpg", "JPEG", quality=86, optimize=True, progressive=True)
-    for n in ["favicon-32.png", "favicon-192.png", "apple-touch-icon.png", "wear.png", "grain.png", "og.jpg"]:
+    for n in ["favicon-32.png", "favicon-192.png", "apple-touch-icon.png", "wear.png", "grain.png", "hero-depth.jpg", "og.jpg"]:
         print(f"  {n:22} {(OUT / n).stat().st_size // 1024} KB")
 
 

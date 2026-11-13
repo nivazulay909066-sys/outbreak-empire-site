@@ -25,16 +25,27 @@ Icons: Simple Icons (CC0).
 The logo is live text set in Anton (`.wm` in `style.css`): OUTBREAK in bone white over EMPIRE in the fire gradient.
 `python -I tools/build_brand.py` (run it **after** `build_images.py`) writes the files text cannot reach:
 the browser-tab icons `favicon-32.png` and `favicon-192.png`, `apple-touch-icon.png`, the share image `og.jpg`,
-the wear mask `wear.png` on the hero title and the film grain `grain.png`.
+the wear mask `wear.png` on the hero title, the film grain `grain.png` and `hero-depth.jpg`,
+a rough hand-drawn depth map of the hero picture (white = close). If the hero picture changes, redraw the shapes in `hero_depth()`.
 
 ## Motion
 One switch turns every moving effect off: the class `still` on `<html>`. It is set before first paint when the device asks
 for reduced motion, and by the "Pause motion" button. The choice is not saved, because the privacy policy says the site
 stores nothing on the device. Keep it that way, or change the policy first.
 
-## Earlier design
-The first design is kept at the tag `v1-original` and the branch `design-v1-original`.
-To go back: `git checkout main && git reset --hard v1-original && git push --force-with-lease` (or copy files from the tag).
+## 3D scenes
+`gl.js` draws two scenes with plain WebGL2, no library: the hero picture with depth (it uses `images/hero-depth.jpg`)
+and the settlement that grows from camp to metropolis as the page scrolls. `main.js` owns scrolling, the menu, the gallery and the motion switch.
+Where WebGL2 is missing or fails, the page falls back to the flat versions on its own.
+To see that fallback, add `?gl=off` to the address. With the motion switch off, the city is one finished picture and the moving layers are hidden.
+The phone menu, the gallery arrows and the picture viewer need scripts; without scripts the page hides them and stays readable.
+
+## Earlier designs
+- First design: tag `v1-original`, branch `design-v1-original`.
+- Second design (large type, scroll motion, no 3D): tag `v2-motion`, branch `redesign-v2`.
+
+To go back to one of them: `git checkout main && git reset --hard v2-motion && git push --force-with-lease`
+(use `v1-original` for the first one), or copy files from the tag.
 
 ## Before publishing
 - Turn on two-step verification on the Google account that owns the form, and do not share the responses sheet (the privacy policy promises this).

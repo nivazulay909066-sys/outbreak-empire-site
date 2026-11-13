@@ -9,13 +9,37 @@
   // "still" = motion is off. It starts from the device setting; the button on the page switches it.
   // The choice is not saved: the site stores nothing on the visitor's device.
   var still = doc.classList.contains('still');
+  // Adding ?gl=off to the address shows the flat versions of the two WebGL scenes, to test the fallback.
+  var GL = /[?&]gl=off\b/.test(location.search) ? null : win.OEGL;
 
-  var nav = $('.nav'), bar = $('.bar i'), hero = $('.hero');
+  var nav = $('.nav'), bar = $('.bar i'), hero = $('.hero'), main = $('main'), foot = $('.foot');
   var tick = $('.tick'), tickRow = $('.tick__row');
   var world = $('.world'), worldBg = $('.world__bg'), scrub = $('.scrub');
   var feats = $$('.feat'), featsBox = $('.feats');
   var grow = $('.grow'), pin = $('.grow__pin'), gWords = $$('.grow__word span'), gSteps = $$('.grow__steps li');
-  var pre = $('.pre'), preImg = $('.pre__bg img'), foot = $('.foot'), footMega = $('.foot__mega span');
+  var pre = $('.pre'), preImg = $('.pre__bg img'), footMega = $('.foot__mega span');
+  function clearProps(el, names) { if (el) names.forEach(function (n) { el.style.removeProperty(n); }); }
+
+  /* ---------- one loop for everything that moves by itself ----------
+     Each actor steps only while its part of the page is on screen. Nothing runs when motion is off or the tab is hidden. */
+  var actors = [], raf = 0, last = 0;
+  function loop(now) {
+    raf = 0;
+    if (still || document.hidden) return;
+    var k = last ? Math.min(3, (now - last) / 16.67) : 1, busy = false, i;
+    last = now;
+    for (i = 0; i < actors.length; i++) if (actors[i].on) { actors[i].step(now, k); busy = true; }
+    if (busy) raf = requestAnimationFrame(loop);
+  }
+  function play() { if (!raf && !still && !document.hidden) { last = 0; raf = requestAnimationFrame(loop); } }
+  function actor(el, step) {
+    var a = { on: true, step: step };
+    actors.push(a);
+    if ('IntersectionObserver' in win) new IntersectionObserver(function (es) { a.on = es[es.length - 1].isIntersecting; play(); }).observe(el);
+    return a;
+  }
+  function retire(a) { var i = actors.indexOf(a); if (i >= 0) actors.splice(i, 1); }
+  document.addEventListener('visibilitychange', play);
 
   /* ---------- text that lights up word by word ---------- */
   var words = [], lit = -1;
@@ -52,8 +76,97 @@
     revs.concat(feats).forEach(function (el) { el.classList.add('in'); });
   }
 
-  /* ---------- the settlement that grows: lights on a dark map ---------- */
-  var city = $('.grow__city'), cctx = null, cells = [], rings = [], CS = 1200, CN = 48;
+  /* ---------- navigation: the phone menu, and which part of the page you are in ---------- */
+  var links = $$('.nav__links a'), spots = links.map(function (a) { return $(a.getAttribute('href')); }), here = -1;
+  function mark(vh, atEnd) {
+    var n = -1, i;
+    for (i = 0; i < spots.length; i++) if (spots[i] && spots[i].getBoundingClientRect().top < vh * .45) n = i;
+    if (atEnd) n = spots.length - 1;
+    if (n === here) return;
+    if (here >= 0) links[here].removeAttribute('aria-current');
+    if (n >= 0) links[n].setAttribute('aria-current', 'location');
+    here = n;
+  }
+  var menuBtn = $('.nav__menu'), menuT = menuBtn && $('.sr-only', menuBtn), menuOpen = false;
+  function setMenu(open, refocus) {
+    if (!menuBtn || open === menuOpen) return;
+    menuOpen = open;
+    nav.classList.toggle('is-open', open);
+    doc.classList.toggle('menu-open', open);
+    menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menuT.textContent = open ? 'Close menu' : 'Menu';
+    [main, foot].forEach(function (el) { if (el) el.inert = open; });   // the page behind the menu is out of reach while it is open
+    if (open) links[0].focus(); else if (refocus) menuBtn.focus();
+  }
+  if (menuBtn && links.length) {
+    menuBtn.hidden = false;
+    menuBtn.addEventListener('click', function () { setMenu(!menuOpen, false); });
+    links.forEach(function (a) { a.addEventListener('click', function () { setMenu(false, false); }); });
+    document.addEventListener('keydown', function (e) { if (menuOpen && e.key === 'Escape') setMenu(false, true); });
+    var wideQ = win.matchMedia('(min-width: 1120px)'), unwide = function (e) { if (e.matches) setMenu(false, false); };
+    if (wideQ.addEventListener) wideQ.addEventListener('change', unwide);
+  }
+
+  /* ---------- drifting sparks and ash ---------- */
+  function sprite(stops) {
+    var s = document.createElement('canvas'); s.width = s.height = 64;
+    var g = s.getContext('2d'), gr = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+    stops.forEach(function (st) { gr.addColorStop(st[0], st[1]); });
+    g.fillStyle = gr; g.fillRect(0, 0, 64, 64);
+    return s;
+  }
+  var EMBER = [[0, 'rgba(255,236,190,1)'], [.18, 'rgba(255,170,70,.85)'], [.5, 'rgba(240,90,20,.2)'], [1, 'rgba(240,90,20,0)']];
+  var ASH = [[0, 'rgba(232,226,216,.95)'], [.4, 'rgba(206,200,192,.34)'], [1, 'rgba(206,200,192,0)']];
+  var fx = [];
+  // o.ash: grey flakes that fall, otherwise sparks that rise. o.count(w, h): how many. o.dpr: resolution cap.
+  function particles(c, o) {
+    var ctx = c && c.getContext ? c.getContext('2d') : null;
+    if (!ctx) return null;
+    var img = sprite(o.ash ? ASH : EMBER), w = 0, h = 0, parts = [];
+    function spawn(p, initial) {
+      p.z = Math.random();                              // 0 = far, 1 = close to the lens
+      p.s = o.ash ? 2.5 + p.z * p.z * 10 : 4 + p.z * p.z * 20;
+      p.x = Math.random() * w;
+      p.y = initial ? Math.random() * h : o.ash ? -20 : h + 24;
+      p.vy = o.ash ? .2 + p.z * .55 : -(.25 + p.z * 1.15);
+      p.vx = (Math.random() - .5) * .4 + (o.ash ? .18 : 0);
+      p.a = o.ash ? .22 + Math.random() * .5 : .35 + Math.random() * .6;
+      p.t = Math.random() * 6.28;
+      return p;
+    }
+    function size() {
+      var dpr = Math.min(win.devicePixelRatio || 1, o.dpr || 2);
+      w = c.clientWidth; h = c.clientHeight;
+      c.width = w * dpr; c.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var n = Math.round(o.count(w, h));
+      while (parts.length < n) parts.push(spawn({}, true));
+      parts.length = n;
+    }
+    function step(k, wind) {
+      var i, p, edge;
+      ctx.clearRect(0, 0, w, h);
+      ctx.globalCompositeOperation = 'lighter';
+      for (i = 0; i < parts.length; i++) {
+        p = parts[i];
+        p.t += (.018 + p.z * .02) * k;
+        p.y += p.vy * k;
+        p.x += (p.vx + Math.sin(p.t) * (.3 + p.z * .5) + (wind || 0) * p.z * .7) * k;
+        if (p.y < -24 || p.y > h + 24 || p.x < -40 || p.x > w + 40) spawn(p, false);
+        edge = o.ash ? Math.min(1, p.y / 90, (h - p.y) / (h * .28)) : Math.min(1, p.y / (h * .42));
+        ctx.globalAlpha = Math.max(0, p.a * edge * (.72 + .28 * Math.sin(p.t * 3.1)));
+        ctx.drawImage(img, p.x - p.s / 2, p.y - p.s / 2, p.s, p.s);
+      }
+    }
+    size();
+    var api = { size: size, step: step, clear: function () { ctx.clearRect(0, 0, w, h); } };
+    fx.push(api);
+    return api;
+  }
+
+  /* ---------- the settlement that grows ----------
+     Normally a WebGL scene (gl.js). Without WebGL2 it is the flat map of lights drawn below. */
+  var city = $('.grow__city'), city3 = null, cityActor = null, gTarget = 0, gSmooth = 0;
+  var cctx = null, cells = [], rings = [], CS = 1200, CN = 48;
   function rng(a) {
     return function () {
       a |= 0; a = a + 0x6D2B79F5 | 0;
@@ -66,6 +179,7 @@
     if (!city || !city.getContext) return;
     city.width = city.height = CS;
     cctx = city.getContext('2d');
+    cells = []; rings = [];
     var r = rng(11), cs = CS / CN, i, j;
     for (i = 0; i < CN; i++) for (j = 0; j < CN; j++) {
       var dx = i - (CN - 1) / 2, dy = j - (CN - 1) / 2;
@@ -117,28 +231,50 @@
       ring.pts.forEach(function (pt) { cctx.fillRect(pt[0] - 5, pt[1] - 5, 10, 10); });
     }
   }
+  // A canvas keeps the first kind of context it was asked for, so the flat map gets a fresh one.
+  function flatCity() {
+    if (cityActor) { retire(cityActor); cityActor = null; }
+    city3 = null;
+    pin.classList.remove('grow--3d');
+    var fresh = city.cloneNode(false);
+    city.parentNode.replaceChild(fresh, city);
+    city = fresh;
+    buildCity();
+  }
+  function startCity() {
+    if (!city || !pin) return;
+    city3 = GL ? GL.city(city, function () { flatCity(); gp = -1; if (still) setGrow(1); else queue(); }) : null;
+    if (!city3) { if (GL) flatCity(); else buildCity(); return; }
+    pin.classList.add('grow--3d');
+    cityActor = actor(pin, function (now, k) {
+      gSmooth += (gTarget - gSmooth) * Math.min(1, .1 * k);
+      city3.draw(gSmooth, now / 1000, true);
+    });
+  }
   var gp = -1;
   function setGrow(p) {
     if (!pin || Math.abs(p - gp) < .0015) return;
-    gp = p;
+    gp = p; gTarget = p;
     var q = p * 4.2, stage = Math.min(3, Math.floor(q));
     pin.style.setProperty('--gp', p.toFixed(3));
     gWords.forEach(function (w, k) { w.classList.toggle('on', k === stage); w.classList.toggle('was', k < stage); });
     gSteps.forEach(function (li, k) { li.classList.toggle('on', k <= stage); li.style.setProperty('--f', clamp(q - k).toFixed(3)); });
-    drawCity(p);
+    if (!city3) drawCity(p);
+    else if (still) { gSmooth = p; city3.draw(p, 0, false); }   // with motion off: one finished picture
   }
 
   /* ---------- everything that follows the scroll, in one pass per frame ---------- */
-  var queued = false, worldHover = false;
+  var queued = false, worldHover = false, heroSy = 0;
   function queue() { if (!queued) { queued = true; requestAnimationFrame(update); } }
   function update() {
     queued = false;
     var y = win.pageYOffset, vh = win.innerHeight, max = doc.scrollHeight - vh, r;
     if (bar) bar.style.transform = 'scaleX(' + (max > 0 ? clamp(y / max) : 0).toFixed(4) + ')';
     if (nav) nav.classList.toggle('is-solid', y > 40);
+    mark(vh, max > 0 && y >= max - 2);
     if (still) return;
 
-    if (hero && y < vh * 1.3) hero.style.setProperty('--sy', clamp(y / vh).toFixed(3));
+    if (hero && y < vh * 1.3) { heroSy = clamp(y / vh); hero.style.setProperty('--sy', heroSy.toFixed(3)); }
     if (tick) {
       r = tick.getBoundingClientRect();
       if (r.top < vh && r.bottom > 0) tickRow.style.transform = 'translate3d(' + (-140 - (vh - r.top) * .5).toFixed(1) + 'px,0,0)';
@@ -177,67 +313,37 @@
     }
   }
 
-  /* ---------- hero: embers, and layers that follow the pointer ---------- */
-  var c = $('.embers'), ctx = c && c.getContext ? c.getContext('2d') : null;
-  var w = 0, h = 0, parts = [], heroOn = true, raf = 0, last = 0, sprite = null;
-  var mx = 0, my = 0, tx = 0, ty = 0;
-  function makeSprite() {
-    sprite = document.createElement('canvas'); sprite.width = sprite.height = 64;
-    var g = sprite.getContext('2d'), gr = g.createRadialGradient(32, 32, 0, 32, 32, 32);
-    gr.addColorStop(0, 'rgba(255,236,190,1)'); gr.addColorStop(.18, 'rgba(255,170,70,.85)');
-    gr.addColorStop(.5, 'rgba(240,90,20,.2)'); gr.addColorStop(1, 'rgba(240,90,20,0)');
-    g.fillStyle = gr; g.fillRect(0, 0, 64, 64);
-  }
-  function size() {
-    if (!ctx) return;
-    var dpr = Math.min(win.devicePixelRatio || 1, 2);
-    w = c.clientWidth; h = c.clientHeight;
-    c.width = w * dpr; c.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    var n = Math.round(Math.min(96, Math.max(34, w / 15)));
-    while (parts.length < n) parts.push(spawn({}, true));
-    parts.length = n;
-  }
-  function spawn(p, initial) {
-    p.z = Math.random();                              // 0 = far, 1 = close to the lens
-    p.s = 4 + p.z * p.z * 20;
-    p.x = Math.random() * w;
-    p.y = initial ? Math.random() * h : h + 24;
-    p.vy = .25 + p.z * 1.15;
-    p.vx = (Math.random() - .5) * .4;
-    p.a = .35 + Math.random() * .6;
-    p.t = Math.random() * 6.28;
-    return p;
-  }
-  function frame(now) {
-    raf = 0;
-    if (still || !heroOn) return;
-    var k = last ? Math.min(3, (now - last) / 16.67) : 1, i, p;
-    last = now;
-    if (Math.abs(tx - mx) > .001 || Math.abs(ty - my) > .001) {
-      mx += (tx - mx) * .06 * k; my += (ty - my) * .06 * k;
-      hero.style.setProperty('--mx', mx.toFixed(3)); hero.style.setProperty('--my', my.toFixed(3));
-    }
-    ctx.clearRect(0, 0, w, h);
-    ctx.globalCompositeOperation = 'lighter';
-    for (i = 0; i < parts.length; i++) {
-      p = parts[i];
-      p.t += (.018 + p.z * .02) * k;
-      p.y -= p.vy * k;
-      p.x += (p.vx + Math.sin(p.t) * (.3 + p.z * .5) + mx * p.z * .7) * k;
-      if (p.y < -24 || p.x < -40 || p.x > w + 40) spawn(p, false);
-      ctx.globalAlpha = p.a * Math.min(1, p.y / (h * .42)) * (.72 + .28 * Math.sin(p.t * 3.1));
-      ctx.drawImage(sprite, p.x - p.s / 2, p.y - p.s / 2, p.s, p.s);
-    }
-    raf = requestAnimationFrame(frame);
-  }
-  function play() { if (ctx && !raf && !still && heroOn && !document.hidden) { last = 0; raf = requestAnimationFrame(frame); } }
-  if (ctx) {
-    makeSprite(); size();
-    if ('IntersectionObserver' in win) new IntersectionObserver(function (es) { heroOn = es[0].isIntersecting; play(); }).observe(c);
-    document.addEventListener('visibilitychange', play);
+  /* ---------- hero: sparks, depth in the picture, and layers that follow the pointer ---------- */
+  var mx = 0, my = 0, tx = 0, ty = 0, depth = null;
+  var heroBg = $('.hero__bg'), heroImg = $('.hero__bg img'), depthC = $('.hero__depth');
+  if (hero) {
+    var sparks = particles($('.embers'), { count: function (w) { return Math.min(96, Math.max(34, w / 15)); } });
+    if (GL && depthC && heroImg) depth = GL.depth(depthC, heroImg, 'images/hero-depth.jpg', function () {
+      depth.draw(mx, my, heroSy, 0);          // one frame first, so the canvas never fades in empty
+      heroBg.classList.add('is-3d');
+      play();
+    }, function () { heroBg.classList.remove('is-3d'); depth = null; });
+    actor(hero, function (now, k) {
+      if (Math.abs(tx - mx) > .001 || Math.abs(ty - my) > .001) {
+        mx += (tx - mx) * Math.min(1, .06 * k); my += (ty - my) * Math.min(1, .06 * k);
+        hero.style.setProperty('--mx', mx.toFixed(3)); hero.style.setProperty('--my', my.toFixed(3));
+      }
+      if (sparks) sparks.step(k, mx);
+      if (depth) depth.draw(mx, my, heroSy, now / 1000);
+    });
     if (fine) hero.addEventListener('pointermove', function (e) {
       tx = (e.clientX / win.innerWidth - .5) * 2; ty = (e.clientY / win.innerHeight - .5) * 2;
     });
+  }
+
+  /* ---------- world: ash in the air, and a light that follows the pointer ---------- */
+  if (world) {
+    var ash = particles($('.fx', world), { ash: true, dpr: 1.25, count: function (w, h) { return Math.min(90, Math.max(28, w * h / 15000)); } });
+    if (ash) actor(world, function (now, k) { ash.step(k, 0); });
+  }
+  if (pre) {
+    var glow = particles($('.fx', pre), { dpr: 1.25, count: function (w) { return Math.min(56, Math.max(20, w / 24)); } });
+    if (glow) actor(pre, function (now, k) { glow.step(k, 0); });
   }
   if (fine && world) {
     world.addEventListener('pointermove', function (e) {
@@ -250,15 +356,80 @@
     world.addEventListener('pointerleave', function () { worldHover = false; });
   }
 
+  /* ---------- gameplay panels: the picture leans away from the pointer ---------- */
+  var fcur = null, fpx = 0, fpy = 0, ftx = 0, fty = 0;
+  if (fine && featsBox) {
+    feats.forEach(function (f) {
+      f.addEventListener('pointermove', function (e) {
+        if (still) return;
+        if (fcur !== f) { clearProps(fcur, ['--px', '--py']); fcur = f; }
+        ftx = (e.clientX / win.innerWidth - .5) * 2; fty = (e.clientY / win.innerHeight - .5) * 2;
+      });
+    });
+    actor(featsBox, function (now, k) {
+      if (!fcur || (Math.abs(ftx - fpx) < .002 && Math.abs(fty - fpy) < .002)) return;
+      fpx += (ftx - fpx) * Math.min(1, .08 * k); fpy += (fty - fpy) * Math.min(1, .08 * k);
+      fcur.style.setProperty('--px', fpx.toFixed(3)); fcur.style.setProperty('--py', fpy.toFixed(3));
+    });
+  }
+
+  /* ---------- things that tilt toward the pointer, with a glow under it ---------- */
+  var down = false, TILT = ['--rx', '--ry', '--gx', '--gy'];
+  function tilt(el, ax, ay) {
+    el.addEventListener('pointermove', function (e) {
+      if (still || down) return;
+      var r = el.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+      el.style.setProperty('--ry', ((x - .5) * ax).toFixed(2) + 'deg');
+      el.style.setProperty('--rx', ((.5 - y) * ay).toFixed(2) + 'deg');
+      el.style.setProperty('--gx', (x * 100).toFixed(1) + '%'); el.style.setProperty('--gy', (y * 100).toFixed(1) + '%');
+    });
+    el.addEventListener('pointerleave', function () { clearProps(el, TILT); });
+  }
+  var cards = $$('.card');
+  if (fine) cards.forEach(function (c) { tilt(c, 7, 6); });
+
+  /* ---------- a warm light that follows the pointer over the whole page ---------- */
+  var torch = null;
+  if (fine) {
+    torch = document.createElement('div');
+    torch.className = 'torch'; torch.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(torch);
+    var tq = false, px = 0, py = 0;
+    win.addEventListener('pointermove', function (e) {
+      px = e.clientX; py = e.clientY;
+      if (still || tq) return;
+      tq = true;
+      requestAnimationFrame(function () {
+        tq = false;
+        torch.style.transform = 'translate3d(' + px + 'px,' + py + 'px,0)';
+        torch.classList.add('on');
+      });
+    }, { passive: true });
+    doc.addEventListener('pointerleave', function () { torch.classList.remove('on'); });
+  }
+
   /* ---------- concept art reel ---------- */
-  var reel = $('.reel'), shots = $$('.shot'), dragged = false;
+  var reel = $('.reel'), shots = $$('.shot'), frames = reel ? $$('li', reel) : [], dragged = false, fq = false;
+  // Pictures away from the middle turn to face it, like a wall that curves around you.
+  function flow() {
+    fq = false;
+    if (still || !reel) return;
+    var half = reel.clientWidth / 2, left = reel.scrollLeft;
+    frames.forEach(function (li) {
+      var o = Math.max(-1, Math.min(1, (li.offsetLeft - left + li.offsetWidth / 2 - half) / (half * 2)));
+      li.style.setProperty('--cy', (o * -26).toFixed(2) + 'deg');
+      li.style.setProperty('--cz', (Math.abs(o) * -140).toFixed(1) + 'px');
+    });
+  }
+  function askFlow() { if (!fq) { fq = true; requestAnimationFrame(flow); } }
   if (reel) {
     var prevB = $('.reel__btn--prev'), nextB = $('.reel__btn--next');
-    var stepW = function () { return reel.children[0].getBoundingClientRect().width + (parseFloat(getComputedStyle(reel).columnGap) || 0); };
+    var stepW = function () { return frames[0].offsetWidth + (parseFloat(getComputedStyle(reel).columnGap) || 0); };
     var ends = function () {
       var m = reel.scrollWidth - reel.clientWidth;
       prevB.setAttribute('aria-disabled', reel.scrollLeft < 4 ? 'true' : 'false');
       nextB.setAttribute('aria-disabled', reel.scrollLeft > m - 4 ? 'true' : 'false');
+      askFlow();
     };
     var move = function (dir) { reel.scrollBy({ left: dir * stepW(), behavior: still ? 'auto' : 'smooth' }); };
     prevB.addEventListener('click', function () { move(-1); });
@@ -267,8 +438,16 @@
     win.addEventListener('resize', ends);
     ends();
 
+    // Arrow keys step from picture to picture.
+    reel.addEventListener('keydown', function (e) {
+      var i = shots.indexOf(document.activeElement), d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+      if (i < 0 || !d || !shots[i + d]) return;
+      e.preventDefault();
+      shots[i + d].focus();
+    });
+
     // Drag with the mouse. A drag is not a click, so it never opens the viewer.
-    var down = false, moved = false, sx = 0, sl = 0;
+    var moved = false, sx = 0, sl = 0;
     reel.addEventListener('dragstart', function (e) { e.preventDefault(); });
     reel.addEventListener('pointerdown', function (e) {
       if (e.pointerType !== 'mouse' || e.button !== 0) return;
@@ -287,15 +466,7 @@
     });
     reel.addEventListener('click', function (e) { if (dragged) { e.preventDefault(); e.stopPropagation(); } }, true);
 
-    if (fine) shots.forEach(function (s) {
-      s.addEventListener('pointermove', function (e) {
-        if (still || down) return;
-        var r = s.getBoundingClientRect();
-        s.style.setProperty('--ry', (((e.clientX - r.left) / r.width - .5) * 9).toFixed(2) + 'deg');
-        s.style.setProperty('--rx', ((.5 - (e.clientY - r.top) / r.height) * 7).toFixed(2) + 'deg');
-      });
-      s.addEventListener('pointerleave', function () { s.style.removeProperty('--rx'); s.style.removeProperty('--ry'); });
-    });
+    if (fine) shots.forEach(function (s) { tilt(s, 9, 7); });
   }
 
   /* ---------- picture viewer ---------- */
@@ -320,11 +491,20 @@
     lb.addEventListener('keydown', function (e) {
       if (e.key === 'ArrowRight') show(cur + 1); else if (e.key === 'ArrowLeft') show(cur - 1);
     });
+    // On a touch screen a sideways swipe also turns the page. The arrow buttons stay.
+    var swipeX = null;
+    lb.addEventListener('pointerdown', function (e) { swipeX = e.pointerType === 'touch' ? e.clientX : null; });
+    lb.addEventListener('pointercancel', function () { swipeX = null; });
+    lb.addEventListener('pointerup', function (e) {
+      if (swipeX === null) return;
+      var dx = e.clientX - swipeX;
+      swipeX = null;
+      if (Math.abs(dx) > 48) show(cur + (dx < 0 ? 1 : -1));
+    });
   }
 
   /* ---------- the motion switch ---------- */
   var mBtn = $('.motion');
-  function clearProps(el, names) { if (el) names.forEach(function (n) { el.style.removeProperty(n); }); }
   function setStill(v) {
     still = v;
     doc.classList.toggle('still', v);
@@ -332,18 +512,21 @@
     gp = -1;
     if (v) {
       if (raf) { cancelAnimationFrame(raf); raf = 0; }
-      if (ctx) ctx.clearRect(0, 0, w, h);
-      mx = my = tx = ty = 0;
+      fx.forEach(function (f) { f.clear(); });
+      mx = my = tx = ty = fpx = fpy = ftx = fty = 0; fcur = null;
       clearProps(hero, ['--sy', '--mx', '--my']);
       clearProps(worldBg, ['--lx', '--ly']);
       clearProps(preImg, ['--pp']); clearProps(footMega, ['--fp']);
       if (tickRow) tickRow.style.transform = '';
-      feats.forEach(function (f) { clearProps(f, ['--en', '--cov']); });
-      shots.forEach(function (s) { clearProps(s, ['--rx', '--ry']); });
+      feats.forEach(function (f) { clearProps(f, ['--en', '--cov', '--px', '--py']); });
+      shots.concat(cards).forEach(function (s) { clearProps(s, TILT); });
+      frames.forEach(function (li) { clearProps(li, ['--cy', '--cz']); });
+      if (torch) torch.classList.remove('on');
       light(words.length);
       setGrow(1);
     } else {
       play();
+      flow();
     }
     update();
   }
@@ -354,9 +537,13 @@
   if (motionQ.addEventListener) motionQ.addEventListener('change', function (e) { setStill(e.matches); });
 
   /* ---------- start ---------- */
-  buildCity();
-  if (still) setStill(true); else update();
+  startCity();
+  if (still) setStill(true); else { update(); play(); }
   win.addEventListener('scroll', queue, { passive: true });
-  win.addEventListener('resize', function () { size(); gp = -1; queue(); });
+  win.addEventListener('resize', function () {
+    fx.forEach(function (f) { f.size(); });
+    gp = -1;
+    if (still) setGrow(1); else queue();
+  });
   win.addEventListener('load', queue);
 })();
