@@ -48,6 +48,8 @@ The site names no person yet. That is fine for the pages themselves, but marketi
 | How long | until unsubscribe or deletion request; at most 12 months after launch; within 30 days if development stops |
 | Security | two-step verification on the Google account; responses sheet not shared |
 
+Visit statistics: Cloudflare Web Analytics, a snippet before `</body>` on every page (no cookies, no personal data; the token in it is a public site id, not a secret). Explained in `privacy.html` under "Website visits".
+
 ## Google Form changes (for whoever edits the form)
 1. Form description: "We use your answers only to email you about Outbreak Empire (closed test, launch and game news). You don't have to give us this information, but we need your email to add you. Privacy Policy: https://outbreakempire.com/privacy.html". When the sender's name and address exist, add them here (see above).
 2. First question, required, multiple choice, neutral (it must not hint at the right answer): "What is your age?" with "Under 13", "13-15", "16-17", "18-24", "25-34", "35-44", "45 or older". "Under 13" and "13-15" go to a closing section ("Sorry, the waitlist is for players aged 16 or older.") and never reach the email field.
