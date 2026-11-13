@@ -23,15 +23,24 @@
 <meta name="twitter:description" content="Lead the survivors. Build what's left. A survival strategy game coming to Android and iOS. Join the waitlist.">
 <meta name="twitter:image" content="https://nivazulay909066-sys.github.io/outbreak-empire-site/images/og.jpg">
 
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="images/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="images/favicon-192.png" sizes="192x192" type="image/png">
 <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
 
 <link rel="preload" href="assets/fonts/barlow-condensed-800.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="images/hero-800.webp" imagesrcset="images/hero-800.webp 800w, images/hero-1600.webp 1600w" imagesizes="100vw">
 <link rel="stylesheet" href="style.css">
 <script>document.documentElement.classList.add('js');</script>
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "VideoGame", "name": "Outbreak Empire",
+ "url": "https://nivazulay909066-sys.github.io/outbreak-empire-site/",
+ "image": "https://nivazulay909066-sys.github.io/outbreak-empire-site/images/og.jpg",
+ "description": "A survival strategy game: lead a band of survivors and build a city on the ruins.",
+ "genre": ["Strategy", "Survival"], "gamePlatform": ["Android", "iOS"], "playMode": "MultiPlayer"}
+</script>
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 
 <header class="nav">
   <a class="nav__logo" href="#top" aria-label="Outbreak Empire, back to top">
@@ -41,6 +50,7 @@
     <a href="#world">The World</a>
     <a href="#features">Features</a>
     <a href="#media">Media</a>
+    <a href="#faq">FAQ</a>
     <a href="#community">Community</a>
   </nav>
   <div class="nav__end">
@@ -49,11 +59,11 @@
       <span class="plat__ios" title="Coming soon on iOS" aria-hidden="true">iOS</span>
       <span class="plat__and" title="Coming soon on Android" aria-hidden="true"><span class="ico ico--android"></span><span class="plat__word">Android</span></span>
     </div>
-    <a class="btn btn--sm" href="https://docs.google.com/forms/d/e/1FAIpQLSfH-3bDS25boa_nsmfyrVO0cmh-lTgv2Yjuh53AL0fX4bEYbQ/viewform" target="_blank" rel="noopener">Join waitlist</a>
+    <a class="btn btn--sm" href="https://docs.google.com/forms/d/e/1FAIpQLSfH-3bDS25boa_nsmfyrVO0cmh-lTgv2Yjuh53AL0fX4bEYbQ/viewform" target="_blank" rel="noopener">Join waitlist<span class="sr-only"> (opens in a new tab)</span></a>
   </div>
 </header>
 
-<main>
+<main id="main" tabindex="-1">
 
   <!-- HERO -->
   <section class="hero">
@@ -65,8 +75,8 @@
     <div class="hero__in">
       <h1 class="hero__logo"><img src="images/logo-640.webp" srcset="images/logo-640.webp 640w, images/logo-1000.webp 925w" sizes="(min-width: 1000px) 31vw, (orientation: landscape) and (max-height: 560px) 24vw, 78vw" alt="Outbreak Empire" fetchpriority="high"></h1>
       <p class="hero__line">Lead the survivors. Build what's left.</p>
-      <a class="btn btn--lg" href="https://docs.google.com/forms/d/e/1FAIpQLSfH-3bDS25boa_nsmfyrVO0cmh-lTgv2Yjuh53AL0fX4bEYbQ/viewform" target="_blank" rel="noopener">Join the waitlist</a>
-      <div class="stores" aria-label="Platforms">
+      <a class="btn btn--lg" href="https://docs.google.com/forms/d/e/1FAIpQLSfH-3bDS25boa_nsmfyrVO0cmh-lTgv2Yjuh53AL0fX4bEYbQ/viewform" target="_blank" rel="noopener">Join the waitlist<span class="sr-only"> (opens in a new tab)</span></a>
+      <div class="stores">
         <span class="store"><span class="ico ico--phone" aria-hidden="true"></span><span><small>Coming soon on</small>iOS</span></span>
         <span class="store"><span class="ico ico--android" aria-hidden="true"></span><span><small>Coming soon on</small>Android</span></span>
       </div>
@@ -164,6 +174,42 @@
     </div>
   </section>
 
+  <!-- FAQ -->
+  <section class="faq" id="faq">
+    <div class="faq__in">
+      <h2 class="title">Questions</h2>
+      <div class="rule" aria-hidden="true"></div>
+      <details>
+        <summary>When does Outbreak Empire come out?</summary>
+        <p>There is no launch date yet. A closed test comes first. Join the waitlist and we will email you as soon as there is news.</p>
+      </details>
+      <details>
+        <summary>Which devices will it run on?</summary>
+        <p>Outbreak Empire is being made for Android and iOS.</p>
+      </details>
+      <details>
+        <summary>Will it be free?</summary>
+        <p>It will be free to download, and it will include in-app purchases.</p>
+      </details>
+      <details>
+        <summary>What is the closed test?</summary>
+        <p>An early version of the game, played by a limited group before launch so we can find problems and tune the balance. We will invite players from the waitlist. Joining the waitlist does not guarantee a place.</p>
+      </details>
+      <details>
+        <summary>Do I play alone?</summary>
+        <p>No. Every settlement shares the world with other players. Trade with them, fight them, or join a coalition and take on what no single settlement could.</p>
+      </details>
+      <details>
+        <summary>Are these pictures from the game?</summary>
+        <p>Not yet. They are concept art that shows the world and the mood we are building. The finished game may look different.</p>
+      </details>
+      <details>
+        <summary>How do I contact you?</summary>
+        <p>Send us a direct message on <a href="https://discord.gg/R8zea6GDbc" target="_blank" rel="noopener">our Discord server<span class="sr-only"> (opens in a new tab)</span></a>.</p>
+      </details>
+    </div>
+  </section>
+
   <!-- PRE-REGISTER -->
   <section class="pre" id="signup">
     <div class="pre__bg" aria-hidden="true">
@@ -172,8 +218,8 @@
     <div class="pre__in">
       <h2 class="title">Be first through the gate</h2>
       <p>The closed test is coming. Join the waitlist and be one of the first to play.</p>
-      <a class="btn btn--lg" href="https://docs.google.com/forms/d/e/1FAIpQLSfH-3bDS25boa_nsmfyrVO0cmh-lTgv2Yjuh53AL0fX4bEYbQ/viewform" target="_blank" rel="noopener">Join the waitlist</a>
-      <p class="pre__note">16+ only. We use your email to tell you about the closed test and launch. Unsubscribe any time. <a href="privacy.html">Privacy Policy</a></p>
+      <a class="btn btn--lg" href="https://docs.google.com/forms/d/e/1FAIpQLSfH-3bDS25boa_nsmfyrVO0cmh-lTgv2Yjuh53AL0fX4bEYbQ/viewform" target="_blank" rel="noopener">Join the waitlist<span class="sr-only"> (opens in a new tab)</span></a>
+      <p class="pre__note">Waitlist open to ages 16 and over. We use your email to tell you about the closed test and launch. Unsubscribe any time. <a href="privacy.html">Privacy Policy</a></p>
     </div>
   </section>
 
@@ -182,11 +228,11 @@
     <div class="comm__in">
       <h2 class="title">Follow the outbreak</h2>
       <ul class="soc soc--big">
-        <li><a href="https://discord.gg/R8zea6GDbc" target="_blank" rel="noopener"><span class="ico ico--discord" aria-hidden="true"></span>Discord</a></li>
-        <li><a href="https://x.com/OutbreakEmpGame" target="_blank" rel="noopener"><span class="ico ico--x" aria-hidden="true"></span>X</a></li>
-        <li><a href="https://www.tiktok.com/@playoutbreakempire" target="_blank" rel="noopener"><span class="ico ico--tiktok" aria-hidden="true"></span>TikTok</a></li>
-        <li><a href="https://www.instagram.com/outbreakempire/" target="_blank" rel="noopener"><span class="ico ico--instagram" aria-hidden="true"></span>Instagram</a></li>
-        <li><a href="https://www.reddit.com/user/OutbreakEmpire" target="_blank" rel="noopener"><span class="ico ico--reddit" aria-hidden="true"></span>Reddit</a></li>
+        <li><a href="https://discord.gg/R8zea6GDbc" target="_blank" rel="noopener"><span class="ico ico--discord" aria-hidden="true"></span>Discord<span class="sr-only"> (opens in a new tab)</span></a></li>
+        <li><a href="https://x.com/OutbreakEmpGame" target="_blank" rel="noopener"><span class="ico ico--x" aria-hidden="true"></span>X<span class="sr-only"> (opens in a new tab)</span></a></li>
+        <li><a href="https://www.tiktok.com/@playoutbreakempire" target="_blank" rel="noopener"><span class="ico ico--tiktok" aria-hidden="true"></span>TikTok<span class="sr-only"> (opens in a new tab)</span></a></li>
+        <li><a href="https://www.instagram.com/outbreakempire/" target="_blank" rel="noopener"><span class="ico ico--instagram" aria-hidden="true"></span>Instagram<span class="sr-only"> (opens in a new tab)</span></a></li>
+        <li><a href="https://www.reddit.com/user/OutbreakEmpire" target="_blank" rel="noopener"><span class="ico ico--reddit" aria-hidden="true"></span>Reddit<span class="sr-only"> (opens in a new tab)</span></a></li>
       </ul>
     </div>
   </section>
@@ -208,6 +254,7 @@
 
 <dialog class="lb" aria-label="Image viewer">
   <button class="lb__x" aria-label="Close">&times;</button>
+  <p class="lb__cap"><b>Concept art</b> <span></span></p>
 </dialog>
 
 <script src="main.js" defer></script>

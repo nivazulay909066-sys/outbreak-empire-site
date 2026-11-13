@@ -41,7 +41,7 @@ out = out.crop((max(0, bbox[0] - pad), max(0, bbox[1] - pad), min(w, bbox[2] + p
 print("cropped", out.size)
 for width in (300, 640, 1000):
     r = out.resize((width, round(out.height * width / out.width)), Image.LANCZOS) if width < out.width else out
-    r.save(OUT / f"logo-{width}.webp", quality=88, alpha_quality=90, method=6)
+    r.save(OUT / f"logo-{width}.webp", quality=78, alpha_quality=80, method=6)
     print(width, r.size, (OUT / f"logo-{width}.webp").stat().st_size)
 
 # Wordmark only (the plate), for the nav bar.
@@ -49,7 +49,7 @@ W, H = out.size
 plate = out.crop((round(W * .03), round(H * .49), round(W * .97), round(H * .95)))
 plate = plate.crop(Image.fromarray((np.asarray(plate)[..., 3] > 128).astype(np.uint8) * 255).getbbox())
 pw = 360
-plate.resize((pw, round(plate.height * pw / plate.width)), Image.LANCZOS).save(OUT / "logo-word-360.webp", quality=88, alpha_quality=90, method=6)
+plate.resize((pw, round(plate.height * pw / plate.width)), Image.LANCZOS).save(OUT / "logo-word-360.webp", quality=78, alpha_quality=80, method=6)
 print("word", plate.size)
 
 # Share image (1200x630): hero art, dark left side, logo on the left.
@@ -76,3 +76,15 @@ ic = Image.new("RGBA", (180, 180), (17, 17, 17, 255))
 li = out.resize((round(out.width * 168 / out.height), 168), Image.LANCZOS)
 ic.alpha_composite(li, ((180 - li.width) // 2, 6))
 ic.convert("RGB").save(OUT / "apple-touch-icon.png")
+
+# Browser-tab icons: the gate emblem above the wordmark (the whole logo is unreadable at 32px).
+em = out.crop((round(W * .18), 0, round(W * .82), round(H * .50)))
+em = em.crop(Image.fromarray((np.asarray(em)[..., 3] > 128).astype(np.uint8) * 255).getbbox())
+side = max(em.size)
+sq = Image.new("RGBA", (side, side), (0, 0, 0, 0))
+sq.alpha_composite(em, ((side - em.width) // 2, (side - em.height) // 2))
+for s in (32, 192):
+    fav = Image.new("RGBA", (s, s), (17, 17, 17, 255))
+    fav.alpha_composite(sq.resize((s, s), Image.LANCZOS))
+    fav.convert("RGB").save(OUT / f"favicon-{s}.png", optimize=True)
+    print("favicon", s, (OUT / f"favicon-{s}.png").stat().st_size)

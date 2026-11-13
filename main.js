@@ -11,7 +11,7 @@
   onScroll();
 
   // Reveal blocks as they enter the screen.
-  var items = document.querySelectorAll('.world__in, .grow__in, .media__in, .pre__in, .comm');
+  var items = document.querySelectorAll('.world__in, .grow__in, .media__in, .faq__in, .pre__in, .comm');
   if ('IntersectionObserver' in window && !still) {
     var io = new IntersectionObserver(function (es) {
       es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
@@ -84,10 +84,12 @@
     var big = document.createElement('img');
     big.alt = '';
     lb.insertBefore(big, lb.firstChild);
+    var cap = lb.querySelector('.lb__cap span');
     document.querySelectorAll('.gal__item').forEach(function (b) {
       b.addEventListener('click', function () {
         big.src = b.getAttribute('data-full');
         big.alt = b.querySelector('img').alt;
+        cap.textContent = big.alt;
         lb.showModal();
       });
     });
