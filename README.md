@@ -13,8 +13,10 @@ Only use images you have a commercial licence for.
 
 ## Site address
 The canonical, Open Graph and Twitter URLs in `index.html` point to
-`https://nivazulay909066-sys.github.io/outbreak-empire-site/`.
-If the repo name or domain changes, search-and-replace that address.
+`https://outbreakempire.com/`.
+If the domain changes, search-and-replace that address, and update `CNAME` and the `<base>` in `404.html`.
+
+DNS (at the registrar): A records for `outbreakempire.com` to 185.199.108.153, 185.199.109.153, 185.199.110.153 and 185.199.111.153, and `www` as a CNAME to `nivazulay909066-sys.github.io`.
 
 Icons: Simple Icons (CC0).
 
@@ -47,7 +49,7 @@ The site names no person yet. That is fine for the pages themselves, but marketi
 | Security | two-step verification on the Google account; responses sheet not shared |
 
 ## Google Form changes (for whoever edits the form)
-1. Form description: "We use your answers only to email you about Outbreak Empire (closed test, launch and game news). You don't have to give us this information, but we need your email to add you. Privacy Policy: https://nivazulay909066-sys.github.io/outbreak-empire-site/privacy.html". When the sender's name and address exist, add them here (see above).
+1. Form description: "We use your answers only to email you about Outbreak Empire (closed test, launch and game news). You don't have to give us this information, but we need your email to add you. Privacy Policy: https://outbreakempire.com/privacy.html". When the sender's name and address exist, add them here (see above).
 2. First question, required, multiple choice, neutral (it must not hint at the right answer): "What is your age?" with "Under 13", "13-15", "16-17", "18-24", "25-34", "35-44", "45 or older". "Under 13" and "13-15" go to a closing section ("Sorry, the waitlist is for players aged 16 or older.") and never reach the email field.
 3. Required checkbox, not pre-ticked: "I agree to receive emails, including promotional emails, about Outbreak Empire. I can unsubscribe at any time."
 4. Required checkbox: "I have read the Privacy Policy."
