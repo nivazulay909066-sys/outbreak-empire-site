@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Outbreak Empire – Survival strategy, coming soon to Android &amp; iOS</title>
-<meta name="description" content="Build a settlement in a fallen city, keep your survivors alive, hunt the dead and fight for a live map shared with real players. Coming soon to Android and iOS.">
+<title>Outbreak Empire – Zombie Survival Strategy Game for Android &amp; iOS</title>
+<meta name="description" content="Build a settlement in a fallen city, survive zombie hordes and winter, and fight for a live map with real players. Mobile survival strategy. Join the closed test waitlist.">
 <meta name="theme-color" content="#0b0b0c">
 <link rel="canonical" href="https://outbreakempire.com/">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Outbreak Empire">
-<meta property="og:title" content="Outbreak Empire – Build what's left">
-<meta property="og:description" content="Build a settlement in a fallen city, keep your people alive and fight for a live map shared with real players. Coming to Android and iOS. Join the waitlist.">
+<meta property="og:title" content="Outbreak Empire – Zombie Survival Strategy Game for Android &amp; iOS">
+<meta property="og:description" content="Build a settlement in a fallen city, survive zombie hordes and winter, and fight for a live map with real players. Mobile survival strategy. Join the closed test waitlist.">
 <meta property="og:url" content="https://outbreakempire.com/">
 <meta property="og:image" content="https://outbreakempire.com/images/og.jpg">
 <meta property="og:image:width" content="1200">
@@ -19,9 +19,10 @@
 <meta property="og:image:alt" content="Outbreak Empire: a band of survivors leaving a fortified settlement">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@OutbreakEmpGame">
-<meta name="twitter:title" content="Outbreak Empire – Build what's left">
-<meta name="twitter:description" content="Build a settlement in a fallen city, keep your people alive and fight for a live map shared with real players. Coming to Android and iOS. Join the waitlist.">
+<meta name="twitter:title" content="Outbreak Empire – Zombie Survival Strategy Game for Android &amp; iOS">
+<meta name="twitter:description" content="Build a settlement in a fallen city, survive zombie hordes and winter, and fight for a live map with real players. Mobile survival strategy. Join the closed test waitlist.">
 <meta name="twitter:image" content="https://outbreakempire.com/images/og.jpg">
+<meta name="twitter:image:alt" content="Outbreak Empire: a band of survivors leaving a fortified settlement">
 
 <link rel="icon" href="images/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="icon" href="images/favicon-192.png" sizes="192x192" type="image/png">
@@ -29,15 +30,17 @@
 
 <link rel="preload" href="assets/fonts/anton-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/barlow-condensed-600.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" as="image" href="images/hero-800.webp" imagesrcset="images/hero-800.webp 800w, images/hero-1600.webp 1600w" imagesizes="(max-aspect-ratio: 1/1) 178vh, 100vw">
+<link rel="preload" as="image" type="image/avif" href="images/hero-800.avif" imagesrcset="images/hero-800.avif 800w, images/hero-1600.avif 1600w" imagesizes="(max-aspect-ratio: 1/1) 178vh, 100vw" fetchpriority="high">
 <link rel="stylesheet" href="style.css">
 <script>(function(d){d.classList.add('js');if(matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('still')})(document.documentElement);</script>
 <script type="application/ld+json">
 {"@context": "https://schema.org", "@type": "VideoGame", "name": "Outbreak Empire",
  "url": "https://outbreakempire.com/",
  "image": "https://outbreakempire.com/images/og.jpg",
- "description": "A survival strategy game for phones: build a settlement in a fallen city, keep your survivors alive, hunt the dead, trade, and fight for a live map shared with other players.",
- "genre": ["Strategy", "Survival"], "gamePlatform": ["Android", "iOS"], "playMode": "MultiPlayer"}
+ "description": "A zombie survival strategy game for Android and iOS: build a settlement in a fallen city, survive zombie hordes and winter, trade, and fight for a live map shared with real players.",
+ "genre": ["Strategy", "Survival", "City builder"], "keywords": "zombie strategy game, survival city builder, post-apocalyptic mobile game, multiplayer strategy",
+ "gamePlatform": ["Android", "iOS"], "operatingSystem": "Android, iOS", "applicationCategory": "Game", "playMode": "MultiPlayer", "inLanguage": "en",
+ "sameAs": ["https://discord.gg/R8zea6GDbc", "https://x.com/OutbreakEmpGame", "https://www.tiktok.com/@playoutbreakempire", "https://www.reddit.com/user/OutbreakEmpire"]}
 </script>
 </head>
 <body>
@@ -70,21 +73,21 @@
   <!-- HERO -->
   <section class="hero" id="top">
     <div class="hero__bg">
-      <img src="images/hero-800.webp" srcset="images/hero-800.webp 800w, images/hero-1600.webp 1600w" sizes="(max-aspect-ratio: 1/1) 178vh, 100vw" alt="" fetchpriority="high" decoding="async">
+      <picture><source type="image/avif" srcset="images/hero-800.avif 800w, images/hero-1600.avif 1600w" sizes="(max-aspect-ratio: 1/1) 178vh, 100vw"><img src="images/hero-800.webp" srcset="images/hero-800.webp 800w, images/hero-1600.webp 1600w" sizes="(max-aspect-ratio: 1/1) 178vh, 100vw" alt="Armed survivors leave the gate of a fortified settlement in a ruined city" fetchpriority="high" decoding="async"></picture>
       <canvas class="hero__depth" aria-hidden="true"></canvas>
     </div>
     <div class="hero__fog" aria-hidden="true"><i></i><i></i></div>
     <canvas class="embers" aria-hidden="true"></canvas>
     <div class="hero__shade" aria-hidden="true"></div>
     <div class="hero__in">
-      <p class="kicker hero__kicker"><i aria-hidden="true"></i>Survival strategy <span aria-hidden="true">/</span> Android &amp; iOS</p>
+      <p class="kicker hero__kicker"><i aria-hidden="true"></i>Coming soon <span aria-hidden="true">/</span> Android &amp; iOS</p>
       <h1 class="mega">
         <span class="sr-only">Outbreak Empire</span>
         <span class="mega__a" aria-hidden="true"><span style="--i:0">O</span><span style="--i:1">U</span><span style="--i:2">T</span><span style="--i:3">B</span><span style="--i:4">R</span><span style="--i:5">E</span><span style="--i:6">A</span><span style="--i:7">K</span></span>
         <span class="mega__b" aria-hidden="true"><span style="--i:0">E</span><span style="--i:1">M</span><span style="--i:2">P</span><span style="--i:3">I</span><span style="--i:4">R</span><span style="--i:5">E</span></span>
       </h1>
-      <p class="hero__line">Lead the survivors. Build what's left.</p>
-      <p class="hero__sub">Build a settlement in a fallen city. Keep your people alive. Fight for a live map you share with real players.</p>
+      <h2 class="hero__line">Zombie survival strategy for mobile</h2>
+      <p class="hero__sub">Lead the survivors and build what's left. Raise a settlement in a fallen city, keep your people alive, and fight for a live map you share with real players.</p>
       <div class="hero__cta">
         <a class="btn btn--lg" href="https://docs.google.com/forms/d/e/1FAIpQLSfH-3bDS25boa_nsmfyrVO0cmh-lTgv2Yjuh53AL0fX4bEYbQ/viewform" target="_blank" rel="noopener"><span class="btn__t">Join the waitlist</span><span class="sr-only"> (opens in a new tab)</span></a>
         <div class="stores">
@@ -104,7 +107,7 @@
 
   <!-- WORLD -->
   <section class="world" id="world">
-    <div class="world__bg" aria-hidden="true"><img src="images/horde-800.webp" srcset="images/horde-800.webp 800w, images/horde-1600.webp 1600w" sizes="(max-aspect-ratio: 1/1) 178vh, 100vw" alt="" loading="lazy" decoding="async"></div>
+    <div class="world__bg" aria-hidden="true"><picture><source type="image/avif" srcset="images/horde-800.avif 800w, images/horde-1600.avif 1600w" sizes="(max-aspect-ratio: 1/1) 178vh, 100vw"><img src="images/horde-800.webp" srcset="images/horde-800.webp 800w, images/horde-1600.webp 1600w" sizes="(max-aspect-ratio: 1/1) 178vh, 100vw" alt="A zombie horde crosses an open field toward a barricaded wall at sunset" loading="lazy" decoding="async"></picture></div>
     <canvas class="fx" data-fx="ash" aria-hidden="true"></canvas>
     <div class="world__in">
       <p class="kicker rv"><i aria-hidden="true"></i>The world</p>
@@ -121,7 +124,7 @@
   <section class="feats" id="features" aria-labelledby="features-h">
     <h2 class="sr-only" id="features-h">Gameplay</h2>
     <article class="feat" id="f-survive">
-      <div class="feat__media"><img src="images/winter-800.webp" srcset="images/winter-800.webp 800w, images/winter-1600.webp 1448w" sizes="(max-aspect-ratio: 1/1) 178vh, 100vw" alt="A snowed-in settlement with trucks of logs and food, water tanks and a furnace" loading="lazy" decoding="async"></div>
+      <div class="feat__media"><picture><source type="image/avif" srcset="images/winter-800.avif 800w, images/winter-1600.avif 1448w" sizes="(max-aspect-ratio: 1/1) 178vh, 100vw"><img src="images/winter-800.webp" srcset="images/winter-800.webp 800w, images/winter-1600.webp 1448w" sizes="(max-aspect-ratio: 1/1) 178vh, 100vw" alt="A snowed-in settlement with trucks of logs and food, water tanks and a furnace" loading="lazy" decoding="async"></picture></div>
       <div class="feat__shade" aria-hidden="true"></div>
       <div class="feat__body">
         <p class="feat__num" aria-hidden="true"><b>01</b><i></i>04</p>
@@ -132,7 +135,7 @@
       <span class="feat__ghost" aria-hidden="true">01</span>
     </article>
     <article class="feat" id="f-defend">
-      <div class="feat__media"><img src="images/horde-800.webp" srcset="images/horde-800.webp 800w, images/horde-1600.webp 1600w" sizes="(max-aspect-ratio: 1/1) 178vh, 100vw" alt="Defenders on a barricaded wall as a horde crosses the field at sunset" loading="lazy" decoding="async"></div>
+      <div class="feat__media"><picture><source type="image/avif" srcset="images/horde-800.avif 800w, images/horde-1600.avif 1600w" sizes="(max-aspect-ratio: 1/1) 178vh, 100vw"><img src="images/horde-800.webp" srcset="images/horde-800.webp 800w, images/horde-1600.webp 1600w" sizes="(max-aspect-ratio: 1/1) 178vh, 100vw" alt="Defenders on a barricaded wall as a horde crosses the field at sunset" loading="lazy" decoding="async"></picture></div>
       <div class="feat__shade" aria-hidden="true"></div>
       <div class="feat__body">
         <p class="feat__num" aria-hidden="true"><b>02</b><i></i>04</p>
@@ -143,7 +146,7 @@
       <span class="feat__ghost" aria-hidden="true">02</span>
     </article>
     <article class="feat" id="f-trade">
-      <div class="feat__media"><img src="images/convoy-800.webp" srcset="images/convoy-800.webp 800w, images/convoy-1600.webp 1600w" sizes="(max-aspect-ratio: 1/1) 178vh, 100vw" alt="Survivors ambush a supply convoy on a ruined highway" loading="lazy" decoding="async"></div>
+      <div class="feat__media"><picture><source type="image/avif" srcset="images/convoy-800.avif 800w, images/convoy-1600.avif 1600w" sizes="(max-aspect-ratio: 1/1) 178vh, 100vw"><img src="images/convoy-800.webp" srcset="images/convoy-800.webp 800w, images/convoy-1600.webp 1600w" sizes="(max-aspect-ratio: 1/1) 178vh, 100vw" alt="Survivors ambush a supply convoy on a ruined highway" loading="lazy" decoding="async"></picture></div>
       <div class="feat__shade" aria-hidden="true"></div>
       <div class="feat__body">
         <p class="feat__num" aria-hidden="true"><b>03</b><i></i>04</p>
@@ -154,7 +157,7 @@
       <span class="feat__ghost" aria-hidden="true">03</span>
     </article>
     <article class="feat" id="f-unite">
-      <div class="feat__media"><img src="images/warroom-800.webp" srcset="images/warroom-800.webp 800w, images/warroom-1600.webp 1600w" sizes="(max-aspect-ratio: 1/1) 178vh, 100vw" alt="Survivors around a map table planning a strike" loading="lazy" decoding="async"></div>
+      <div class="feat__media"><picture><source type="image/avif" srcset="images/warroom-800.avif 800w, images/warroom-1600.avif 1600w" sizes="(max-aspect-ratio: 1/1) 178vh, 100vw"><img src="images/warroom-800.webp" srcset="images/warroom-800.webp 800w, images/warroom-1600.webp 1600w" sizes="(max-aspect-ratio: 1/1) 178vh, 100vw" alt="Survivors around a map table planning a strike" loading="lazy" decoding="async"></picture></div>
       <div class="feat__shade" aria-hidden="true"></div>
       <div class="feat__body">
         <p class="feat__num" aria-hidden="true"><b>04</b><i></i>04</p>
@@ -170,7 +173,6 @@
   <section class="grow" id="city" aria-label="From camp to metropolis">
     <div class="grow__pin">
       <canvas class="grow__city" aria-hidden="true"></canvas>
-      <a class="grow__skip" href="#edge">Skip ahead</a>
       <div class="grow__in">
         <p class="kicker"><i aria-hidden="true"></i>From a few tents</p>
         <div class="grow__word" aria-hidden="true"><span>Camp</span><span>Village</span><span>City</span><span>Metropolis</span></div>
@@ -215,23 +217,23 @@
     </div>
     <ul class="reel">
       <li><button class="shot" type="button" data-full="images/hero-1600.webp" aria-label="View: leaving the gate">
-        <img src="images/hero-800.webp" srcset="images/hero-800.webp 800w, images/hero-1600.webp 1600w" sizes="(min-width: 900px) 46vw, 82vw" alt="A squad of survivors leaving the settlement gate" loading="lazy" decoding="async">
+        <picture><source type="image/avif" srcset="images/hero-800.avif 800w, images/hero-1600.avif 1600w" sizes="(min-width: 900px) 46vw, 82vw"><img src="images/hero-800.webp" srcset="images/hero-800.webp 800w, images/hero-1600.webp 1600w" sizes="(min-width: 900px) 46vw, 82vw" alt="A squad of survivors leaving the settlement gate" loading="lazy" decoding="async"></picture>
         <span class="shot__cap" aria-hidden="true"><b>01</b>Leaving the gate</span>
       </button></li>
       <li><button class="shot" type="button" data-full="images/horde-1600.webp" aria-label="View: the wall at sunset">
-        <img src="images/horde-800.webp" srcset="images/horde-800.webp 800w, images/horde-1600.webp 1600w" sizes="(min-width: 900px) 46vw, 82vw" alt="Defenders on the wall as the horde approaches" loading="lazy" decoding="async">
+        <picture><source type="image/avif" srcset="images/horde-800.avif 800w, images/horde-1600.avif 1600w" sizes="(min-width: 900px) 46vw, 82vw"><img src="images/horde-800.webp" srcset="images/horde-800.webp 800w, images/horde-1600.webp 1600w" sizes="(min-width: 900px) 46vw, 82vw" alt="Defenders on the wall as the horde approaches" loading="lazy" decoding="async"></picture>
         <span class="shot__cap" aria-hidden="true"><b>02</b>The wall at sunset</span>
       </button></li>
       <li><button class="shot" type="button" data-full="images/convoy-1600.webp" aria-label="View: the ambush">
-        <img src="images/convoy-800.webp" srcset="images/convoy-800.webp 800w, images/convoy-1600.webp 1600w" sizes="(min-width: 900px) 46vw, 82vw" alt="A convoy ambush on the highway" loading="lazy" decoding="async">
+        <picture><source type="image/avif" srcset="images/convoy-800.avif 800w, images/convoy-1600.avif 1600w" sizes="(min-width: 900px) 46vw, 82vw"><img src="images/convoy-800.webp" srcset="images/convoy-800.webp 800w, images/convoy-1600.webp 1600w" sizes="(min-width: 900px) 46vw, 82vw" alt="A convoy ambush on the highway" loading="lazy" decoding="async"></picture>
         <span class="shot__cap" aria-hidden="true"><b>03</b>The ambush</span>
       </button></li>
       <li><button class="shot" type="button" data-full="images/warroom-1600.webp" aria-label="View: the war room">
-        <img src="images/warroom-800.webp" srcset="images/warroom-800.webp 800w, images/warroom-1600.webp 1600w" sizes="(min-width: 900px) 46vw, 82vw" alt="Coalition leaders around the map table" loading="lazy" decoding="async">
+        <picture><source type="image/avif" srcset="images/warroom-800.avif 800w, images/warroom-1600.avif 1600w" sizes="(min-width: 900px) 46vw, 82vw"><img src="images/warroom-800.webp" srcset="images/warroom-800.webp 800w, images/warroom-1600.webp 1600w" sizes="(min-width: 900px) 46vw, 82vw" alt="Coalition leaders around the map table" loading="lazy" decoding="async"></picture>
         <span class="shot__cap" aria-hidden="true"><b>04</b>The war room</span>
       </button></li>
       <li><button class="shot" type="button" data-full="images/winter-1600.webp" aria-label="View: winter">
-        <img src="images/winter-800.webp" srcset="images/winter-800.webp 800w, images/winter-1600.webp 1448w" sizes="(min-width: 900px) 46vw, 82vw" alt="The settlement in deep winter" loading="lazy" decoding="async">
+        <picture><source type="image/avif" srcset="images/winter-800.avif 800w, images/winter-1600.avif 1448w" sizes="(min-width: 900px) 46vw, 82vw"><img src="images/winter-800.webp" srcset="images/winter-800.webp 800w, images/winter-1600.webp 1448w" sizes="(min-width: 900px) 46vw, 82vw" alt="The settlement in deep winter" loading="lazy" decoding="async"></picture>
         <span class="shot__cap" aria-hidden="true"><b>05</b>Winter</span>
       </button></li>
     </ul>
@@ -247,7 +249,7 @@
       <div class="faq__list rv">
         <details>
           <summary>What kind of game is Outbreak Empire?</summary>
-          <p>A survival strategy game for phones, set in a city that fell to an outbreak. You build a settlement, look after the people in it, raise an army, hunt the dead, trade, and fight for a live map you share with other players.</p>
+          <p>A zombie strategy game for Android and iOS, set in a city that fell to an outbreak. At heart it is a survival city builder: you build a settlement, look after the people in it, raise an army and hunt the dead. It is also a multiplayer strategy game, because you trade and fight for a live map you share with other players.</p>
         </details>
         <details>
           <summary>When does Outbreak Empire come out?</summary>
@@ -255,11 +257,11 @@
         </details>
         <details>
           <summary>Which devices will it run on?</summary>
-          <p>Outbreak Empire is being made for Android and iOS.</p>
+          <p>Outbreak Empire is a post-apocalyptic mobile game, being made for Android and iOS.</p>
         </details>
         <details>
           <summary>Will it be free?</summary>
-          <p>It will be free to download, and it will include in-app purchases.</p>
+          <p>Yes. Outbreak Empire will be free.</p>
         </details>
         <details>
           <summary>What is the closed test?</summary>
@@ -292,7 +294,7 @@
   <!-- PRE-REGISTER -->
   <section class="pre" id="signup">
     <div class="pre__bg" aria-hidden="true">
-      <img src="images/hero-800.webp" srcset="images/hero-800.webp 800w, images/hero-1600.webp 1600w" sizes="(max-aspect-ratio: 1/1) 178vh, 100vw" alt="" loading="lazy" decoding="async">
+      <picture><source type="image/avif" srcset="images/hero-800.avif 800w, images/hero-1600.avif 1600w" sizes="(max-aspect-ratio: 1/1) 178vh, 100vw"><img src="images/hero-800.webp" srcset="images/hero-800.webp 800w, images/hero-1600.webp 1600w" sizes="(max-aspect-ratio: 1/1) 178vh, 100vw" alt="Survivors leaving the settlement gate at dusk" loading="lazy" decoding="async"></picture>
     </div>
     <canvas class="fx" data-fx="embers" aria-hidden="true"></canvas>
     <div class="pre__in">
@@ -310,11 +312,10 @@
       <p class="kicker rv"><i aria-hidden="true"></i>Community</p>
       <h2 class="head rv"><span class="ln"><span>Follow the</span></span> <span class="ln ln--fire"><span>outbreak</span></span></h2>
       <ul class="soc soc--big rv">
-        <li><a href="https://discord.gg/R8zea6GDbc" target="_blank" rel="noopener"><span class="ico ico--discord" aria-hidden="true"></span>Discord<span class="sr-only"> (opens in a new tab)</span></a></li>
-        <li><a href="https://x.com/OutbreakEmpGame" target="_blank" rel="noopener"><span class="ico ico--x" aria-hidden="true"></span>X<span class="sr-only"> (opens in a new tab)</span></a></li>
-        <li><a href="https://www.tiktok.com/@playoutbreakempire" target="_blank" rel="noopener"><span class="ico ico--tiktok" aria-hidden="true"></span>TikTok<span class="sr-only"> (opens in a new tab)</span></a></li>
-        <li><a href="https://www.instagram.com/outbreakempire/" target="_blank" rel="noopener"><span class="ico ico--instagram" aria-hidden="true"></span>Instagram<span class="sr-only"> (opens in a new tab)</span></a></li>
-        <li><a href="https://www.reddit.com/user/OutbreakEmpire" target="_blank" rel="noopener"><span class="ico ico--reddit" aria-hidden="true"></span>Reddit<span class="sr-only"> (opens in a new tab)</span></a></li>
+        <li><a class="soc__discord" href="https://discord.gg/R8zea6GDbc" target="_blank" rel="noopener"><span class="ico ico--discord" aria-hidden="true"></span>Discord<span class="sr-only"> (opens in a new tab)</span></a></li>
+        <li><a class="soc__x" href="https://x.com/OutbreakEmpGame" target="_blank" rel="noopener"><span class="ico ico--x" aria-hidden="true"></span>X<span class="sr-only"> (opens in a new tab)</span></a></li>
+        <li><a class="soc__tiktok" href="https://www.tiktok.com/@playoutbreakempire" target="_blank" rel="noopener"><span class="ico ico--tiktok" aria-hidden="true"></span>TikTok<span class="sr-only"> (opens in a new tab)</span></a></li>
+        <li><a class="soc__reddit" href="https://www.reddit.com/user/OutbreakEmpire" target="_blank" rel="noopener"><span class="ico ico--reddit" aria-hidden="true"></span>Reddit<span class="sr-only"> (opens in a new tab)</span></a></li>
       </ul>
     </div>
   </section>
@@ -327,12 +328,13 @@
     <p class="wm wm--foot"><span class="sr-only">Outbreak Empire</span><span aria-hidden="true">Outbreak <b>Empire</b></span></p>
     <p>Coming soon to Android and iOS.</p>
     <a class="foot__top" href="#top">Back to top</a>
-    <nav class="foot__links" aria-label="Legal">
+    <nav class="foot__links" aria-label="More">
+      <a href="devlog/">Devlog</a>
       <a href="privacy.html">Privacy Policy</a>
       <a href="accessibility.html">Accessibility</a>
     </nav>
     <p class="foot__small">Images shown are concept art and do not represent final in-game visuals.<br>&copy; 2026 Outbreak Empire. All rights reserved.</p>
-    <p class="foot__small foot__tm">Android is a trademark of Google LLC. The Android robot is reproduced or modified from work created and shared by Google and used according to terms described in the Creative Commons 3.0 Attribution License. iOS is a trademark or registered trademark of Cisco in the U.S. and other countries and is used by Apple Inc. under license. Discord, X, TikTok, Instagram and Reddit are trademarks of their respective owners. Outbreak Empire is not affiliated with or endorsed by Apple, Google or any of these companies.</p>
+    <p class="foot__small foot__tm">Android is a trademark of Google LLC. The Android robot is reproduced or modified from work created and shared by Google and used according to terms described in the Creative Commons 3.0 Attribution License. iOS is a trademark or registered trademark of Cisco in the U.S. and other countries and is used by Apple Inc. under license. Discord, X, TikTok and Reddit are trademarks of their respective owners. Outbreak Empire is not affiliated with or endorsed by Apple, Google or any of these companies.</p>
   </div>
 </footer>
 
@@ -344,7 +346,6 @@
   <p class="lb__cap"><b>Concept art</b> <span></span></p>
 </dialog>
 
-<script src="gl.js" defer></script>
 <script src="main.js" defer></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "504ced6f977843a2ae80c1b1369cdaec"}'></script><!-- End Cloudflare Web Analytics -->
 </body>

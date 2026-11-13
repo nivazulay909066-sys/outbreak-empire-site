@@ -1,4 +1,6 @@
-"""Convert source images in images/src/ to compressed WebP, plus og.jpg and apple-touch-icon.png.
+"""Convert source images in images/src/ to compressed AVIF and WebP, plus og.jpg and apple-touch-icon.png.
+The page offers AVIF first (about 40% smaller) and WebP to browsers without AVIF.
+Run tools/build_brand.py afterwards: it redraws og.jpg with the title on it.
 
 Usage:  python tools/build_images.py      (needs: pip install pillow)
 Sources expected in images/src/ (png/jpg/webp): hero, horde, convoy, warroom, winter.
@@ -11,6 +13,7 @@ ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "images" / "src"
 OUT = ROOT / "images"
 QUALITY = 74
+AVIF_QUALITY = 50
 NAMES = ["hero", "horde", "convoy", "warroom", "winter"]
 WIDTHS = [800, 1600]
 
@@ -30,6 +33,9 @@ def main():
             im = img if img.width <= w else img.resize((w, round(img.height * w / img.width)), Image.LANCZOS)
             path = OUT / f"{name}-{w}.webp"
             im.save(path, "WEBP", quality=QUALITY, method=6)
+            print(f"  {path.name:20} {im.width}x{im.height}  {path.stat().st_size // 1024} KB")
+            path = OUT / f"{name}-{w}.avif"
+            im.save(path, "AVIF", quality=AVIF_QUALITY, speed=4)
             print(f"  {path.name:20} {im.width}x{im.height}  {path.stat().st_size // 1024} KB")
         if name == "hero":
             ImageOps.fit(img, (1200, 630), Image.LANCZOS, centering=(0.5, 0.4)).save(

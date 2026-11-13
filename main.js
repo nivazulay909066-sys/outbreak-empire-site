@@ -9,8 +9,9 @@
   // "still" = motion is off. It starts from the device setting; the button on the page switches it.
   // The choice is not saved: the site stores nothing on the visitor's device.
   var still = doc.classList.contains('still');
-  // Adding ?gl=off to the address shows the flat versions of the two WebGL scenes, to test the fallback.
-  var GL = /[?&]gl=off\b/.test(location.search) ? null : win.OEGL;
+  // The two WebGL scenes live in gl.js, fetched only after the page has loaded and only where WebGL2 exists.
+  // Until it arrives (or if it never does) the flat versions show. Adding ?gl=off to the address keeps them, to test the fallback.
+  var GL = null, glWanted = !/[?&]gl=off\b/.test(location.search) && 'WebGL2RenderingContext' in win;
 
   var nav = $('.nav'), bar = $('.bar i'), hero = $('.hero'), main = $('main'), foot = $('.foot');
   var tick = $('.tick'), tickRow = $('.tick__row');
@@ -243,8 +244,13 @@
   }
   function startCity() {
     if (!city || !pin) return;
-    city3 = GL ? GL.city(city, function () { flatCity(); gp = -1; if (still) setGrow(1); else queue(); }) : null;
-    if (!city3) { if (GL) flatCity(); else buildCity(); return; }
+    if (!GL) { buildCity(); return; }
+    // The flat map already holds a 2D context, so the 3D scene gets a fresh canvas.
+    var fresh = city.cloneNode(false);
+    city.parentNode.replaceChild(fresh, city);
+    city = fresh; cctx = null;
+    city3 = GL.city(city, function () { flatCity(); gp = -1; if (still) setGrow(1); else queue(); });
+    if (!city3) { flatCity(); return; }
     pin.classList.add('grow--3d');
     cityActor = actor(pin, function (now, k) {
       gSmooth += (gTarget - gSmooth) * Math.min(1, .1 * k);
@@ -291,17 +297,19 @@
     if (featsBox) {
       r = featsBox.getBoundingClientRect();
       if (r.top < vh * 1.2 && r.bottom > -vh * .2) {
-        var fh = feats[0].offsetHeight;
+        // Panels after the first sit a pause (their top margin) below the one before, so each one holds before it is covered.
+        var fh = feats[0].offsetHeight, step = fh + (feats[1] ? parseFloat(getComputedStyle(feats[1]).marginTop) || 0 : 0);
         feats.forEach(function (f, i) {
-          var top = r.top + i * fh;
+          var top = r.top + i * step, next = top + step;
           f.style.setProperty('--en', clamp(1 - top / vh).toFixed(3));
-          f.style.setProperty('--cov', i < feats.length - 1 ? clamp(-top / fh).toFixed(3) : '0');
+          f.style.setProperty('--cov', i < feats.length - 1 ? clamp(1 - next / fh).toFixed(3) : '0');
         });
       }
     }
     if (grow) {
       r = grow.getBoundingClientRect();
-      setGrow(clamp(-r.top / Math.max(1, r.height - vh)));
+      // From when the section is 40% into the view until its top has gone 30% past the top of the screen.
+      setGrow(clamp((vh * .6 - r.top) / (vh * .9)));
     }
     if (pre) {
       r = pre.getBoundingClientRect();
@@ -318,11 +326,6 @@
   var heroBg = $('.hero__bg'), heroImg = $('.hero__bg img'), depthC = $('.hero__depth');
   if (hero) {
     var sparks = particles($('.embers'), { count: function (w) { return Math.min(96, Math.max(34, w / 15)); } });
-    if (GL && depthC && heroImg) depth = GL.depth(depthC, heroImg, 'images/hero-depth.jpg', function () {
-      depth.draw(mx, my, heroSy, 0);          // one frame first, so the canvas never fades in empty
-      heroBg.classList.add('is-3d');
-      play();
-    }, function () { heroBg.classList.remove('is-3d'); depth = null; });
     actor(hero, function (now, k) {
       if (Math.abs(tx - mx) > .001 || Math.abs(ty - my) > .001) {
         mx += (tx - mx) * Math.min(1, .06 * k); my += (ty - my) * Math.min(1, .06 * k);
@@ -536,8 +539,36 @@
   }
   if (motionQ.addEventListener) motionQ.addEventListener('change', function (e) { setStill(e.matches); });
 
+  /* ---------- the WebGL scenes, fetched late ---------- */
+  function startDepth() {
+    if (!GL || !hero || !depthC || !heroImg) return;
+    depth = GL.depth(depthC, heroImg, 'images/hero-depth.jpg', function () {
+      depth.draw(mx, my, heroSy, 0);          // one frame first, so the canvas never fades in empty
+      heroBg.classList.add('is-3d');
+      play();
+    }, function () { heroBg.classList.remove('is-3d'); depth = null; });
+  }
+  var glAsked = false;
+  function fetchGL() {
+    if (glAsked || !glWanted) return;
+    glAsked = true;
+    var sc = document.createElement('script');
+    sc.src = 'gl.js';
+    sc.onload = function () {
+      GL = win.OEGL || null;
+      if (!GL) return;
+      startDepth();
+      startCity();
+      gp = -1;
+      if (still) setGrow(1); else { queue(); play(); }
+    };
+    document.head.appendChild(sc);
+  }
+  function soon() { if (win.requestIdleCallback) win.requestIdleCallback(fetchGL, { timeout: 1500 }); else setTimeout(fetchGL, 200); }
+
   /* ---------- start ---------- */
   startCity();
+  if (document.readyState === 'complete') soon(); else win.addEventListener('load', soon);
   if (still) setStill(true); else { update(); play(); }
   win.addEventListener('scroll', queue, { passive: true });
   win.addEventListener('resize', function () {

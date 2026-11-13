@@ -6,7 +6,7 @@ Plain static site (HTML + CSS + a few lines of JS). No build step except images.
 1. Put `hero`, `horde`, `convoy`, `warroom`, `winter` (png, jpg or webp) in `images/src/`
    (optional: `icon.png` for the iPhone home-screen icon).
 2. Run `python tools/build_images.py` (needs `pip install pillow`).
-   It writes compressed WebP files, `og.jpg` (share image) and `apple-touch-icon.png` into `images/`.
+   It writes compressed WebP and AVIF files (800 and 1600 wide; the page offers AVIF first), `og.jpg` (share image) and `apple-touch-icon.png` into `images/`.
    Missing sources become labelled PLACEHOLDER images.
 
 Only use images you have a commercial licence for.
@@ -36,16 +36,24 @@ stores nothing on the device. Keep it that way, or change the policy first.
 ## 3D scenes
 `gl.js` draws two scenes with plain WebGL2, no library: the hero picture with depth (it uses `images/hero-depth.jpg`)
 and the settlement that grows from camp to metropolis as the page scrolls. `main.js` owns scrolling, the menu, the gallery and the motion switch.
-Where WebGL2 is missing or fails, the page falls back to the flat versions on its own.
+`gl.js` is not in the page's HTML: `main.js` fetches it after the page has loaded, when the browser is idle, and only where WebGL2 exists, so it never slows the first screen.
+Until it arrives, and where WebGL2 is missing or fails, the page falls back to the flat versions on its own.
 To see that fallback, add `?gl=off` to the address. With the motion switch off, the city is one finished picture and the moving layers are hidden.
 The phone menu, the gallery arrows and the picture viewer need scripts; without scripts the page hides them and stays readable.
 
 ## Earlier designs
 - First design: tag `v1-original`, branch `design-v1-original`.
 - Second design (large type, scroll motion, no 3D): tag `v2-motion`, branch `redesign-v2`.
+- Third design (3D, as first published): tag `v3-3d`.
+- Copies of the first two are published at `/v1/` and `/v2/`, kept out of search results with noindex.
 
 To go back to one of them: `git checkout main && git reset --hard v2-motion && git push --force-with-lease`
 (use `v1-original` for the first one), or copy files from the tag.
+
+## Devlog
+`devlog/index.html` lists the posts; `devlog/post-template.html` is the layout for one post (it is marked noindex, so the empty template stays out of search).
+To add a post: copy the template to `devlog/<slug>.html`, fill every [BRACKETED] part, delete the noindex line,
+add one line to the list in `devlog/index.html` (the comment there shows it), and add the address to `sitemap.xml`.
 
 ## Before publishing
 - Turn on two-step verification on the Google account that owns the form, and do not share the responses sheet (the privacy policy promises this).

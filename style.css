@@ -94,13 +94,13 @@ main:focus { outline: none; }
 .btn--sm .btn__t::after { display: none; }
 @media (max-width: 359px) { .btn--sm { padding: 12px 12px; font-size: 14px; } .plat { gap: 9px; } .plat__ios + .plat__and { padding-left: 9px; } }
 
+picture { display: contents; }
 /* ---------- icons ---------- */
 .ico { display: inline-block; width: 20px; height: 20px; background: currentColor; -webkit-mask: var(--s) center / contain no-repeat; mask: var(--s) center / contain no-repeat; flex: none; }
 .ico--discord { --s: url("assets/icons/discord.svg"); }
 .ico--x { --s: url("assets/icons/x.svg"); }
 .ico--tiktok { --s: url("assets/icons/tiktok.svg"); }
 .ico--reddit { --s: url("assets/icons/reddit.svg"); }
-.ico--instagram { --s: url("assets/icons/instagram.svg"); }
 .ico--phone { --s: url("assets/icons/phone.svg"); }
 .ico--android { --s: url("assets/icons/android.svg"); }
 
@@ -228,6 +228,10 @@ html.menu-open { overflow: hidden; }
 @media (max-width: 420px) { .hero__kicker { letter-spacing: .22em; font-size: 12px; } .hero__kicker i { width: 26px; } }
 @media (max-width: 350px) { .hero__kicker { letter-spacing: .12em; gap: 9px; white-space: nowrap; } .hero__kicker i { width: 16px; } }
 @media (max-height: 700px) and (orientation: portrait) { .stores { display: none; } }
+/* Phones and small tablets: the title, the line under it and the button are there at once, with no letter animation. */
+@media (max-width: 999.98px), (orientation: landscape) and (max-height: 560px) {
+  .mega span[style], .hero__kicker, .hero__line, .hero__sub, .hero__cta { animation: none; }
+}
 
 /* Wide screens and phones turned sideways: the title sits in the shadow on the left, the figure stays clear on the right. */
 @media (min-width: 1000px), (orientation: landscape) and (max-height: 560px) {
@@ -278,6 +282,9 @@ html.menu-open { overflow: hidden; }
   /* As the next panel slides over it, this one leans back into the screen. */
   transform: perspective(1400px) rotateX(calc(var(--cov, 0) * 7deg)) scale(calc(1 - var(--cov, 0) * .07)); transform-origin: 50% 100%;
 }
+/* Each panel stays whole on screen for a while before the next one starts to cover it, so its text can be read. */
+.feat + .feat { margin-top: 70vh; margin-top: 70svh; }
+.feats::after { content: ""; display: block; height: 50vh; height: 50svh; }
 .feat__media { position: absolute; inset: -3%; z-index: -3; transform: translate3d(calc(var(--px, 0) * -14px), calc((1 - var(--en, 1)) * -22vh + var(--py, 0) * -9px), 0) scale(calc(1.08 - var(--en, 1) * .08)); will-change: transform; }
 .feat__media img { width: 100%; height: 100%; object-fit: cover; }
 .feat::before { content: ""; position: absolute; inset: 0; z-index: -2; background: linear-gradient(90deg, rgba(0,0,0,.84) 0%, rgba(0,0,0,.5) 36%, rgba(0,0,0,0) 66%), linear-gradient(0deg, rgba(0,0,0,.74), rgba(0,0,0,0) 46%); }
@@ -311,9 +318,9 @@ html.menu-open { overflow: hidden; }
 
 /* ---------- growth: pinned while the settlement grows ---------- */
 .grow { position: relative; background: #040405; }
-.js:not(.still) .grow { height: 320vh; }
 .grow__pin { position: relative; isolation: isolate; overflow: hidden; display: grid; place-items: center; min-height: 86vh; padding: 110px 20px; }
-.js:not(.still) .grow__pin { position: sticky; top: 0; height: 100vh; height: 100svh; min-height: 0; padding: 64px 20px 20px; }
+/* The city is one screen tall and grows as it passes through the view; it never holds the page. */
+.js:not(.still) .grow__pin { height: 100vh; height: 100svh; min-height: 0; padding: 64px 20px 20px; }
 .grow__city { position: absolute; z-index: -1; left: 50%; top: 50%; width: min(1500px, 190vmax); aspect-ratio: 1; opacity: .95;
   transform: translate(-50%, -46%) perspective(1200px) rotateX(60deg) rotateZ(calc(-14deg + var(--gp, 1) * 26deg)) scale(calc(.82 + var(--gp, 1) * .5));
   -webkit-mask: radial-gradient(closest-side, #000 52%, transparent 100%); mask: radial-gradient(closest-side, #000 52%, transparent 100%); }
@@ -343,21 +350,16 @@ html.menu-open { overflow: hidden; }
 .grow--3d .grow__word { font-size: min(13vw, 17vh, 190px); margin: 6px 0 12px; }
 .grow--3d .grow__line { margin-top: auto; }
 .grow--3d.grow__pin { min-height: 100vh; min-height: 100svh; }
-.grow--3d.grow__pin, .js:not(.still) .grow--3d.grow__pin { padding: 84px 20px 74px; }
+.grow--3d.grow__pin, .js:not(.still) .grow--3d.grow__pin { padding: 84px 20px 44px; }
 @media (max-width: 380px), (orientation: portrait) and (max-height: 700px) { .grow--3d .grow__line { font-size: 14px; line-height: 1.45; } }
 /* A way past the pinned stretch for anyone who does not want to scroll through it. */
-.grow__skip { display: none; }
-.js:not(.still) .grow__skip { display: inline-flex; align-items: center; gap: 10px; position: absolute; z-index: 2; left: 50%; bottom: 18px; transform: translateX(-50%); padding: 11px 16px 10px; white-space: nowrap;
   font: 600 12px/1 var(--cond); letter-spacing: .22em; text-transform: uppercase; color: #d6cfbf; background: rgba(4,4,5,.66); border: 1px solid rgba(255,255,255,.26); transition: border-color .3s, color .3s; }
-.grow__skip::after { content: ""; width: 7px; height: 7px; margin-top: -4px; border-right: 2px solid var(--orange); border-bottom: 2px solid var(--orange); transform: rotate(45deg); }
-.grow__skip:hover { color: #fff; border-color: var(--orange); }
 @media (orientation: landscape) and (max-height: 560px) {
   .grow__word { font-size: min(15vw, 34vh); margin: 2px 0 6px; }
   .grow__line { margin-top: 12px; font-size: 14px; line-height: 1.4; max-width: 520px; }
   .grow__steps li { padding-top: 9px; } .grow__steps li::before { display: none; }
   .grow__in .kicker { display: none; }
-  .grow--3d.grow__pin, .js:not(.still) .grow--3d.grow__pin { padding: 66px 20px 54px; }
-  .js:not(.still) .grow__skip { bottom: 10px; padding: 8px 12px 7px; }
+  .grow--3d.grow__pin, .js:not(.still) .grow--3d.grow__pin { padding: 66px 20px 24px; }
   /* a short, wide screen: the words on the left, the city on the right, nothing on top of anything */
   .grow--3d .grow__city { left: 42%; width: 58%; }
   .grow--3d.grow__pin::after { background: none; }
@@ -367,7 +369,6 @@ html.menu-open { overflow: hidden; }
   .grow--3d .grow__steps { width: 100%; gap: 10px; letter-spacing: .1em; }
   .grow--3d .grow__steps li { flex: 1; min-width: 0; }
   .grow--3d .grow__line { margin: 14px 0 0; text-wrap: pretty; }
-  .js:not(.still) .grow--3d .grow__skip { left: 20px; transform: none; }
 }
 
 /* ---------- what sets it apart: six cards that tilt toward the pointer ---------- */
@@ -464,16 +465,24 @@ html.menu-open { overflow: hidden; }
 .comm__in { max-width: 1340px; margin: 0 auto; }
 .soc--big { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; margin-top: clamp(40px, 5vw, 70px); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
 .soc--big li { border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.soc--big li:first-child { grid-column: 1 / -1; }
+/* With an odd number of networks the first one takes the full row on phones. */
+.soc--big li:first-child:nth-last-child(odd) { grid-column: 1 / -1; }
 .soc--big a { position: relative; isolation: isolate; overflow: hidden; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; gap: 34px; min-height: 150px; padding: 22px;
   font: 400 clamp(22px, 2.4vw, 34px)/1 var(--disp); text-transform: uppercase; letter-spacing: .03em; color: var(--ink); transition: color .35s; }
-.soc--big a::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--orange); transform: scaleY(0); transform-origin: bottom; transition: transform .5s var(--ease); }
-.soc--big .ico { width: 34px; height: 34px; color: var(--orange); transition: color .35s, transform .5s var(--ease); }
-.soc--big a:hover, .soc--big a:focus-visible { color: #130802; }
+.soc--big a::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--b, var(--orange)); transform: scaleY(0); transform-origin: bottom; transition: transform .5s var(--ease); }
+.soc--big .ico { width: 34px; height: 34px; color: var(--c, var(--orange)); transition: color .35s, transform .5s var(--ease); }
+.soc--big a:hover, .soc--big a:focus-visible { color: var(--h, #130802); }
 .soc--big a:hover::before, .soc--big a:focus-visible::before { transform: none; }
-.soc--big a:hover .ico, .soc--big a:focus-visible .ico { color: #130802; transform: translateY(-4px) scale(1.12); }
-.soc--big a:focus-visible { outline-offset: -4px; outline-color: #130802; }
-@media (min-width: 800px) { .soc--big { grid-template-columns: repeat(5, 1fr); } .soc--big li:first-child { grid-column: auto; } .soc--big a { min-height: clamp(170px, 17vw, 250px); padding: 28px; } }
+.soc--big a:hover .ico, .soc--big a:focus-visible .ico { color: var(--h, #130802); transform: translateY(-4px) scale(1.12); }
+.soc--big a:focus-visible { outline-offset: -4px; outline-color: var(--h, #130802); }
+/* Each network in its own colours: --c the mark, --b the fill on hover, --h the mark and name on that fill. */
+.soc--big .soc__discord { --c: #5865f2; --b: #5865f2; --h: #fff; }
+.soc--big .soc__x { --c: #fff; --b: #fff; --h: #000; }
+.soc--big .soc__tiktok { --c: #fff; --b: #000; --h: #fff; }
+.soc--big .soc__tiktok .ico { filter: drop-shadow(-1.5px -1.5px 0 #25f4ee) drop-shadow(1.5px 1.5px 0 #fe2c55); }
+.soc--big .soc__reddit { --c: #ff4500; --b: #ff4500; --h: #fff; }
+.soc--big .soc__facebook { --c: #1877f2; --b: #1877f2; --h: #fff; }
+@media (min-width: 800px) { .soc--big { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 1fr; } .soc--big li:first-child { grid-column: auto; } .soc--big a { min-height: clamp(170px, 17vw, 250px); padding: 28px; } }
 
 /* ---------- footer ---------- */
 .foot { position: relative; overflow: hidden; border-top: 1px solid var(--line); background: #040405; padding: 0 20px 56px; text-align: center; }
@@ -515,6 +524,17 @@ html.menu-open { overflow: hidden; }
 .doc ul { margin: 10px 0 0; padding-left: 22px; }
 .doc li + li { margin-top: 6px; }
 .doc a { color: var(--hi); text-decoration: underline; text-underline-offset: 3px; }
+/* devlog */
+.posts { list-style: none; margin: 14px 0 0; padding: 0; }
+.posts:empty { display: none; }
+.posts:not(:empty) + .posts__none { display: none; }
+.posts li + li { border-top: 1px solid var(--line); }
+.posts a { display: grid; gap: 6px; padding: 18px 0; text-decoration: none; color: inherit; }
+.posts time { font: 600 13px/1 var(--cond); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+.posts b { font: 400 26px/1.1 var(--disp); text-transform: uppercase; color: var(--ink); }
+.posts a:hover b { color: var(--hi); }
+.post__fig { margin: 26px 0; } .post__fig img { width: 100%; height: auto; } .post__fig figcaption { margin-top: 8px; color: var(--muted); font-size: 14px; }
+.post__back { margin-top: 40px; }
 .doc--404 { min-height: 70vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
 .doc--404 h1 { font-size: clamp(54px, 12vw, 140px); }
 .doc--404 p { margin-top: 18px; }
@@ -556,7 +576,7 @@ html:not(.js) .shot { pointer-events: none; }
 
 @media print {
   .js .rv, .js .rv .ln > span, .js .feat__num, .js .feat__tag, .js .feat__text, .js .feat__title, .scrub .w, .card, .shot, .mega { opacity: 1 !important; transform: none !important; clip-path: none !important; }
-  .nav, .bar, .embers, .hero__depth, .fx, .torch, .hero__down, .hero__fog, .frame, .tick, .motion, .lb, .skip, .grow__city, .grow__skip, .feat__ghost, .reel__nav, .foot__mega, .foot__top { display: none !important; }
+  .nav, .bar, .embers, .hero__depth, .fx, .torch, .hero__down, .hero__fog, .frame, .tick, .motion, .lb, .skip, .grow__city, .feat__ghost, .reel__nav, .foot__mega, .foot__top { display: none !important; }
   body::after { display: none; }
   .feat { position: relative; height: auto; min-height: 60vh; transform: none; }
   .grow { height: auto !important; } .grow__pin { position: relative !important; height: auto !important; }
