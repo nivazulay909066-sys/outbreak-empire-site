@@ -20,10 +20,21 @@ DNS (at the registrar): A records for `outbreakempire.com` to 185.199.108.153, 1
 
 Icons: Simple Icons (CC0).
 
-## Logo
+## Logo and brand files
 
-Put the logo (flat near-black background) at `images/src/logo.jpg`, then run `python -I tools/build_logo.py` **after** `build_images.py`.
-It writes the transparent `logo-*.webp`, `logo-word-360.webp`, the browser-tab icons `favicon-32.png` and `favicon-192.png` (the gate emblem only), and overwrites `og.jpg` and `apple-touch-icon.png` with logo versions.
+The logo is live text set in Anton (`.wm` in `style.css`): OUTBREAK in bone white over EMPIRE in the fire gradient.
+`python -I tools/build_brand.py` (run it **after** `build_images.py`) writes the files text cannot reach:
+the browser-tab icons `favicon-32.png` and `favicon-192.png`, `apple-touch-icon.png`, the share image `og.jpg`,
+the wear mask `wear.png` on the hero title and the film grain `grain.png`.
+
+## Motion
+One switch turns every moving effect off: the class `still` on `<html>`. It is set before first paint when the device asks
+for reduced motion, and by the "Pause motion" button. The choice is not saved, because the privacy policy says the site
+stores nothing on the device. Keep it that way, or change the policy first.
+
+## Earlier design
+The first design is kept at the tag `v1-original` and the branch `design-v1-original`.
+To go back: `git checkout main && git reset --hard v1-original && git push --force-with-lease` (or copy files from the tag).
 
 ## Before publishing
 - Turn on two-step verification on the Google account that owns the form, and do not share the responses sheet (the privacy policy promises this).
