@@ -22,3 +22,8 @@ Icons: Simple Icons (CC0).
 
 Put the logo (flat near-black background) at `images/src/logo.jpg`, then run `python -I tools/build_logo.py` **after** `build_images.py`.
 It writes the transparent `logo-*.webp`, `logo-word-360.webp`, and overwrites `og.jpg` and `apple-touch-icon.png` with logo versions.
+
+## Before publishing
+- `privacy.html` and `accessibility.html` have red placeholders: the owner's name and a contact email. Fill them in.
+- The Google Form needs a required consent checkbox (16+, agree to the Privacy Policy, email about the game) with a link to `privacy.html`.
+- Fonts still load from Google Fonts. Self-host them (woff2 in `assets/fonts/`), then remove the Google Fonts lines from the HTML pages and from the privacy policy.
