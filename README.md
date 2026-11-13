@@ -24,6 +24,17 @@ Put the logo (flat near-black background) at `images/src/logo.jpg`, then run `py
 It writes the transparent `logo-*.webp`, `logo-word-360.webp`, and overwrites `og.jpg` and `apple-touch-icon.png` with logo versions.
 
 ## Before publishing
-- `privacy.html` and `accessibility.html` have red placeholders: the owner's name and a contact email. Fill them in.
-- The Google Form needs a required consent checkbox (16+, agree to the Privacy Policy, email about the game) with a link to `privacy.html`.
-- Fonts still load from Google Fonts. Self-host them (woff2 in `assets/fonts/`), then remove the Google Fonts lines from the HTML pages and from the privacy policy.
+- Turn on two-step verification on the Google account that owns the form, and do not share the responses sheet (the privacy policy promises this).
+- Optional, recommended: add the owner's name and a dedicated contact email to `privacy.html` and `accessibility.html`. Until then the contact is the Discord server, which GDPR and the Israeli privacy law treat as weak, because they expect the controller's identity.
+
+## Google Form changes (for whoever edits the form)
+1. Form description: "We use your answers only to email you about Outbreak Empire (closed test, launch and game news). You don't have to give us this information, but we need your email to add you. Privacy Policy: https://nivazulay909066-sys.github.io/outbreak-empire-site/privacy.html"
+2. First question, required, multiple choice: "How old are you?" with "Under 13", "13-15", "16 or older". Under 16 goes to a closing section ("Sorry, the waitlist is for players aged 16 or older.") and never reaches the email field.
+3. Required checkbox, not pre-ticked: "I agree to receive emails, including promotional emails, about Outbreak Empire. I can unsubscribe at any time."
+4. Required checkbox: "I have read the Privacy Policy."
+
+## Every waitlist email
+- Send one email per person, or put everyone in BCC. Never in To or CC.
+- In Israel, start the subject line with the word "פרסומת" (Communications Law section 30A).
+- End with: "You're receiving this because you joined the Outbreak Empire waitlist. To unsubscribe, reply 'unsubscribe'. We'll remove you within 10 days." US law (CAN-SPAM) also needs a postal address in promotional emails; a P.O. box is enough.
+- Remove anyone who unsubscribes within 10 days.

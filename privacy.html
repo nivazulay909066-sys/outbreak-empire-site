@@ -7,9 +7,7 @@
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#0b0b0c">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preload" href="assets/fonts/barlow-condensed-800.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -22,7 +20,7 @@
   <p class="doc__date">Last updated: November 13, 2026</p>
 
   <h2>Who we are</h2>
-  <p>This website promotes Outbreak Empire, a mobile game in development. The website and the waitlist are run by <span class="todo">[Owner name — add before publishing]</span> (“we”, “us”), who is responsible for your personal data. You can reach us at <span class="todo">[Contact email — add before publishing]</span>.</p>
+  <p>This website promotes Outbreak Empire, a mobile game in development. The website and the waitlist are run by the Outbreak Empire team (“we”, “us”), who are responsible for your personal data. You can reach us through <a href="https://discord.gg/R8zea6GDbc" rel="noopener">our Discord server</a> (send a direct message to a team member).</p>
 
   <h2>The short version</h2>
   <ul>
@@ -37,20 +35,19 @@
   <ul>
     <li>your email address (required);</li>
     <li>your preferred language (English or Hebrew);</li>
-    <li>your Discord username, if you choose to give it;</li>
+    <li>your Discord username, if you choose to give it, so we can recognise you on our Discord server and invite you to closed-test channels there;</li>
     <li>how you heard about us, if you choose to tell us.</li>
   </ul>
   <p>We use this to email you about the closed test, the launch and major news about the game, in your language, and to understand where our players come from. We rely on your consent. You are not legally required to give us this information, but without an email address we cannot add you to the waitlist.</p>
   <p><strong>Messages.</strong> If you write to us, we use your message and contact details only to answer you.</p>
-  <p><strong>Website visits.</strong> We do not collect anything about your visit ourselves. Two outside services see basic technical data (such as your IP address and browser) when you load the site:</p>
+  <p><strong>Website visits.</strong> We do not collect anything about your visit ourselves. One outside service sees basic technical data (such as your IP address and browser) when you load the site:</p>
   <ul>
     <li>GitHub Pages, which hosts the site and logs visitor IP addresses for security. See the <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener">GitHub Privacy Statement</a>.</li>
-    <li>Google Fonts, which serves the site's fonts. See the <a href="https://policies.google.com/privacy" rel="noopener">Google Privacy Policy</a>.</li>
   </ul>
 
   <h2>Who processes your data</h2>
   <p>The waitlist form and its responses are stored with Google (Google Forms), under Google's own terms and privacy policy. Emails to the waitlist are sent from our own mailbox. We do not give your data to anyone else, unless the law requires it.</p>
-  <p>Google and GitHub may store data on servers in the United States and other countries. They protect transfers out of the EU, the UK and Israel with the safeguards their policies describe.</p>
+  <p>Google and GitHub may store data on servers in the United States and other countries. They protect transfers out of the EU, the UK and Israel with safeguards such as the EU-US Data Privacy Framework and standard contractual clauses, as their policies describe. We make no automated decisions about you and do no profiling.</p>
 
   <h2>How long we keep it</h2>
   <p>We keep waitlist data until you unsubscribe or ask us to delete it, and no longer than 12 months after the game launches. Then we delete it.</p>
@@ -61,13 +58,21 @@
     <li>show you the data we hold about you;</li>
     <li>correct it;</li>
     <li>delete it;</li>
-    <li>stop emailing you. Every email we send has an unsubscribe link, or just write to us.</li>
+    <li>stop emailing you: reply “unsubscribe” to any email we send, or write to us. We remove you within 10 days;</li>
+    <li>restrict or object to how we use your data;</li>
+    <li>give you your data in a portable format.</li>
   </ul>
-  <p>Withdrawing consent does not affect anything we did before. Write to <span class="todo">[Contact email — add before publishing]</span> and we will answer within 30 days. If you are not happy with our answer, you can complain to your local data protection authority, for example the Privacy Protection Authority in Israel, your EU supervisory authority, or the ICO in the UK.</p>
-  <p>If you live in California: we do not sell or share personal information, and we do not use it for targeted advertising.</p>
+  <p>Withdrawing consent does not affect anything we did before. Contact us through <a href="https://discord.gg/R8zea6GDbc" rel="noopener">our Discord server</a> and we will answer within 30 days. If you are not happy with our answer, you can complain to your local data protection authority, for example the Privacy Protection Authority in Israel, your EU supervisory authority, or the ICO in the UK.</p>
+  <p>If you live in California or another US state with a privacy law: we do not sell or share personal information, and we do not use it for targeted advertising.</p>
+
+  <h2>Do Not Track</h2>
+  <p>We do not track visitors over time or across websites, so we treat every visitor the same whether or not their browser sends a Do Not Track or Global Privacy Control signal. This website lets no third party collect information about your activity across other websites.</p>
 
   <h2>Age</h2>
   <p>The waitlist is for people aged 16 or older. If you are younger, please do not sign up. If we learn that someone under 16 has joined, we will delete their data.</p>
+
+  <h2>Security</h2>
+  <p>Waitlist answers are kept only in the form's Google account, which is protected with two-step verification and is not shared. We send waitlist emails so that no one can see other people's addresses.</p>
 
   <h2>Cookies</h2>
   <p>The website sets no cookies and stores nothing on your device. The Google Form is on Google's site, where Google's own cookie rules apply.</p>
@@ -81,7 +86,7 @@
 <footer class="foot">
   <div class="foot__in">
     <nav class="foot__links" aria-label="Legal">
-      <a href="privacy.html">Privacy Policy</a>
+      <a href="privacy.html" aria-current="page">Privacy Policy</a>
       <a href="accessibility.html">Accessibility</a>
     </nav>
     <p class="foot__small">&copy; 2026 Outbreak Empire. All rights reserved.</p>

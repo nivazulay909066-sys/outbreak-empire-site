@@ -16,6 +16,7 @@
 <meta property="og:image" content="https://nivazulay909066-sys.github.io/outbreak-empire-site/images/og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Outbreak Empire: a band of survivors leaving a fortified settlement">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@OutbreakEmpGame">
 <meta name="twitter:title" content="Outbreak Empire – Build what's left">
@@ -25,15 +26,14 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preload" href="assets/fonts/barlow-condensed-800.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="images/hero-800.webp" imagesrcset="images/hero-800.webp 800w, images/hero-1600.webp 1600w" imagesizes="100vw">
 <link rel="stylesheet" href="style.css">
+<script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
 
-<header class="nav" id="top">
+<header class="nav">
   <a class="nav__logo" href="#top" aria-label="Outbreak Empire, back to top">
     <img src="images/logo-word-360.webp" alt="Outbreak Empire">
   </a>
@@ -63,7 +63,7 @@
     </div>
     <canvas class="embers" aria-hidden="true"></canvas>
     <div class="hero__in">
-      <h1 class="hero__logo"><img src="images/logo-640.webp" srcset="images/logo-640.webp 640w, images/logo-1000.webp 1000w" sizes="(min-width: 1000px) 31vw, (orientation: landscape) and (max-height: 560px) 24vw, 78vw" alt="Outbreak Empire" fetchpriority="high"></h1>
+      <h1 class="hero__logo"><img src="images/logo-640.webp" srcset="images/logo-640.webp 640w, images/logo-1000.webp 925w" sizes="(min-width: 1000px) 31vw, (orientation: landscape) and (max-height: 560px) 24vw, 78vw" alt="Outbreak Empire" fetchpriority="high"></h1>
       <p class="hero__line">Lead the survivors. Build what's left.</p>
       <a class="btn btn--lg" href="https://docs.google.com/forms/d/e/1FAIpQLSfH-3bDS25boa_nsmfyrVO0cmh-lTgv2Yjuh53AL0fX4bEYbQ/viewform" target="_blank" rel="noopener">Join the waitlist</a>
       <div class="stores" aria-label="Platforms">
@@ -86,8 +86,10 @@
   </section>
 
   <!-- FEATURES (tabbed showcase) -->
-  <section class="show" id="features" aria-label="Features">
+  <section class="show" id="features" aria-labelledby="features-h">
+    <h2 class="sr-only" id="features-h">Features</h2>
     <div class="show__slides">
+      <button class="show__pause" type="button" aria-pressed="false" hidden><span class="sr-only">Pause slideshow</span></button>
       <figure class="slide is-on" id="f-survive" role="tabpanel" aria-labelledby="t-survive">
         <img src="images/winter-800.webp" srcset="images/winter-800.webp 800w, images/winter-1600.webp 1448w" sizes="100vw" loading="lazy" decoding="async"
              alt="A snowed-in settlement with trucks of logs and food, water tanks and a furnace">
@@ -121,11 +123,11 @@
         </figcaption>
       </figure>
     </div>
-    <div class="tabs" role="tablist" aria-label="Features">
+    <div class="tabs" role="tablist" aria-label="Choose a feature">
       <button class="tab is-on" id="t-survive" role="tab" aria-selected="true" aria-controls="f-survive"><span>Build</span><i></i></button>
-      <button class="tab" id="t-raid" role="tab" aria-selected="false" aria-controls="f-raid"><span>Trade</span><i></i></button>
-      <button class="tab" id="t-defend" role="tab" aria-selected="false" aria-controls="f-defend"><span>Defend</span><i></i></button>
-      <button class="tab" id="t-unite" role="tab" aria-selected="false" aria-controls="f-unite"><span>Unite</span><i></i></button>
+      <button class="tab" id="t-raid" role="tab" aria-selected="false" aria-controls="f-raid" tabindex="-1"><span>Trade</span><i></i></button>
+      <button class="tab" id="t-defend" role="tab" aria-selected="false" aria-controls="f-defend" tabindex="-1"><span>Defend</span><i></i></button>
+      <button class="tab" id="t-unite" role="tab" aria-selected="false" aria-controls="f-unite" tabindex="-1"><span>Unite</span><i></i></button>
     </div>
   </section>
 
@@ -149,15 +151,15 @@
       <div class="rule" aria-hidden="true"></div>
       <div class="gal">
         <button class="gal__item gal__item--wide" data-full="images/hero-1600.webp" aria-label="View: leaving the gate">
-          <img src="images/hero-800.webp" alt="A squad of survivors leaving the settlement gate" loading="lazy" decoding="async"></button>
+          <img src="images/hero-800.webp" srcset="images/hero-800.webp 800w, images/hero-1600.webp 1600w" sizes="(min-width: 800px) 66vw, 100vw" alt="A squad of survivors leaving the settlement gate" loading="lazy" decoding="async"></button>
         <button class="gal__item" data-full="images/horde-1600.webp" aria-label="View: the wall at sunset">
-          <img src="images/horde-800.webp" alt="Defenders on the wall as the horde approaches" loading="lazy" decoding="async"></button>
+          <img src="images/horde-800.webp" srcset="images/horde-800.webp 800w, images/horde-1600.webp 1600w" sizes="(min-width: 800px) 33vw, 100vw" alt="Defenders on the wall as the horde approaches" loading="lazy" decoding="async"></button>
         <button class="gal__item" data-full="images/convoy-1600.webp" aria-label="View: the ambush">
-          <img src="images/convoy-800.webp" alt="A convoy ambush on the highway" loading="lazy" decoding="async"></button>
+          <img src="images/convoy-800.webp" srcset="images/convoy-800.webp 800w, images/convoy-1600.webp 1600w" sizes="(min-width: 800px) 33vw, 100vw" alt="A convoy ambush on the highway" loading="lazy" decoding="async"></button>
         <button class="gal__item" data-full="images/warroom-1600.webp" aria-label="View: the war room">
-          <img src="images/warroom-800.webp" alt="Coalition leaders around the map table" loading="lazy" decoding="async"></button>
+          <img src="images/warroom-800.webp" srcset="images/warroom-800.webp 800w, images/warroom-1600.webp 1600w" sizes="(min-width: 800px) 33vw, 100vw" alt="Coalition leaders around the map table" loading="lazy" decoding="async"></button>
         <button class="gal__item" data-full="images/winter-1600.webp" aria-label="View: winter">
-          <img src="images/winter-800.webp" alt="The settlement in deep winter" loading="lazy" decoding="async"></button>
+          <img src="images/winter-800.webp" srcset="images/winter-800.webp 800w, images/winter-1600.webp 1448w" sizes="(min-width: 800px) 33vw, 100vw" alt="The settlement in deep winter" loading="lazy" decoding="async"></button>
       </div>
     </div>
   </section>
@@ -200,12 +202,11 @@
       <a href="accessibility.html">Accessibility</a>
     </nav>
     <p class="foot__small">Images shown are concept art and do not represent final in-game visuals.<br>&copy; 2026 Outbreak Empire. All rights reserved.</p>
-    <p class="foot__small foot__tm">Android is a trademark of Google LLC. The Android robot is reproduced or modified from work created and shared by Google and used according to terms described in the Creative Commons 3.0 Attribution License. IOS is a trademark or registered trademark of Cisco in the U.S. and other countries and is used under license. Discord, X, TikTok, Instagram and Reddit are trademarks of their respective owners. Outbreak Empire is not affiliated with or endorsed by Apple, Google or any of these companies.</p>
+    <p class="foot__small foot__tm">Android is a trademark of Google LLC. The Android robot is reproduced or modified from work created and shared by Google and used according to terms described in the Creative Commons 3.0 Attribution License. iOS is a trademark or registered trademark of Cisco in the U.S. and other countries and is used by Apple Inc. under license. Discord, X, TikTok, Instagram and Reddit are trademarks of their respective owners. Outbreak Empire is not affiliated with or endorsed by Apple, Google or any of these companies.</p>
   </div>
 </footer>
 
 <dialog class="lb" aria-label="Image viewer">
-  <img alt="">
   <button class="lb__x" aria-label="Close">&times;</button>
 </dialog>
 

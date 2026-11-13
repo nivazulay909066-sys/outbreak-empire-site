@@ -1,7 +1,8 @@
 (function () {
   var doc = document.documentElement;
   doc.classList.add('js');
-  var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var motionQ = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var still = motionQ.matches;
 
   // Nav turns solid once you scroll.
   var nav = document.querySelector('.nav');
@@ -39,16 +40,36 @@
     clearTimeout(timer);
     if (auto && visible) timer = setTimeout(function () { go(cur + 1); }, DUR);
   }
+  var pauseBtn = show.querySelector('.show__pause');
+  function stopAuto() {
+    auto = false; clearTimeout(timer); show.classList.remove('is-auto');
+    pauseBtn.setAttribute('aria-pressed', 'true');
+    pauseBtn.querySelector('span').textContent = 'Play slideshow';
+  }
+  function startAuto() {
+    if (still) return;
+    auto = true; show.classList.add('is-auto');
+    pauseBtn.setAttribute('aria-pressed', 'false');
+    pauseBtn.querySelector('span').textContent = 'Pause slideshow';
+    go(cur);
+  }
+  pauseBtn.addEventListener('click', function () { if (auto) stopAuto(); else startAuto(); });
   tabs.forEach(function (t, k) {
-    t.addEventListener('click', function () { auto = false; show.classList.remove('is-auto'); go(k); });
+    t.addEventListener('click', function () { stopAuto(); go(k); });
+    t.addEventListener('focus', function () { if (auto) stopAuto(); });
     t.addEventListener('keydown', function (e) {
-      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
-        e.preventDefault(); auto = false; show.classList.remove('is-auto');
-        go(cur + (e.key === 'ArrowRight' ? 1 : -1)); tabs[cur].focus();
-      }
+      var next = null;
+      if (e.key === 'ArrowRight') next = k + 1;
+      else if (e.key === 'ArrowLeft') next = k - 1;
+      else if (e.key === 'Home') next = 0;
+      else if (e.key === 'End') next = tabs.length - 1;
+      if (next === null) return;
+      e.preventDefault(); stopAuto(); go(next); tabs[cur].focus();
     });
   });
+  if (motionQ.addEventListener) motionQ.addEventListener('change', function (e) { still = e.matches; if (still) stopAuto(); });
   if (auto) {
+    pauseBtn.hidden = false;
     show.classList.add('is-auto');
     show.style.setProperty('--dur', DUR / 1000 + 's');
     new IntersectionObserver(function (es) {
@@ -60,7 +81,9 @@
   // Lightbox for the concept art.
   var lb = document.querySelector('.lb');
   if (lb && lb.showModal) {
-    var big = lb.querySelector('img');
+    var big = document.createElement('img');
+    big.alt = '';
+    lb.insertBefore(big, lb.firstChild);
     document.querySelectorAll('.gal__item').forEach(function (b) {
       b.addEventListener('click', function () {
         big.src = b.getAttribute('data-full');
