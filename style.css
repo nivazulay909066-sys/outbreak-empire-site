@@ -372,6 +372,28 @@ html.menu-open { overflow: hidden; }
 }
 
 /* ---------- what sets it apart: six cards that tilt toward the pointer ---------- */
+/* play to win */
+.ptw { position: relative; padding: clamp(90px, 12vw, 170px) var(--pad) clamp(70px, 9vw, 130px); background: radial-gradient(60% 55% at 15% 30%, rgba(226,71,15,.16), rgba(226,71,15,0) 70%), var(--bg); }
+.ptw__in { max-width: 1340px; margin: 0 auto; }
+.ptw__h { margin-top: 22px; font: 400 clamp(52px, 10vw, 158px)/.92 var(--disp); text-transform: uppercase; letter-spacing: .005em; }
+.ptw__old, .ptw__new { display: block; width: max-content; max-width: 100%; }
+.ptw__old { position: relative; font-size: .6em; color: var(--muted); }
+.ptw__old::after { content: ""; position: absolute; left: -4%; right: -4%; top: 50%; height: .16em; margin-top: -.08em; background: var(--orange); border-radius: 2px; transform: rotate(-4deg); transform-origin: 0 50%; box-shadow: 0 0 18px rgba(255,122,31,.55); }
+.ptw__new { margin-top: .08em; background: var(--fire); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.ptw__new b { display: inline-block; font-weight: 400; color: #fff; -webkit-text-fill-color: #fff; text-shadow: 0 0 22px rgba(255,176,87,.9), 0 0 4px #fff; transform: rotate(-6deg) translateY(-.03em); }
+.ptw__lead { max-width: 40em; margin-top: clamp(26px, 3vw, 40px); font-size: clamp(17px, 1.5vw, 21px); line-height: 1.55; color: #ece5d6; }
+.ptw__grid { list-style: none; margin: clamp(36px, 4.5vw, 64px) 0 0; padding: 0; display: grid; counter-reset: card; gap: clamp(14px, 1.6vw, 24px); }
+.ptw__grid li { counter-increment: card; display: flex; }
+@media (min-width: 800px) { .ptw__grid { grid-template-columns: repeat(3, 1fr); } }
+.js .ptw__old::after { transform: rotate(-4deg) scaleX(0); transition: transform .7s var(--ease) .5s; }
+.js .ptw__h.in .ptw__old::after { transform: rotate(-4deg) scaleX(1); }
+.js .ptw__new b { opacity: 0; transform: rotate(-6deg) translateY(-.6em) scale(1.6); transition: opacity .35s ease 1.15s, transform .55s var(--ease) 1.15s; }
+.js .ptw__h.in .ptw__new b { opacity: 1; transform: rotate(-6deg) translateY(-.03em); }
+.js .ptw__grid li.rv:nth-child(2) { transition-delay: .09s; }
+.js .ptw__grid li.rv:nth-child(3) { transition-delay: .18s; }
+.still .ptw__old::after { transform: rotate(-4deg) !important; }
+.still .ptw__new b { opacity: 1 !important; transform: rotate(-6deg) translateY(-.03em) !important; }
+
 .edge { position: relative; padding: clamp(110px, 14vw, 200px) var(--pad) clamp(50px, 7vw, 100px); background: radial-gradient(70% 50% at 85% 0%, rgba(226,71,15,.13), rgba(226,71,15,0) 70%), var(--bg); }
 .edge__in { max-width: 1340px; margin: 0 auto; }
 .edge__grid { list-style: none; margin: clamp(40px, 5vw, 76px) 0 0; padding: 0; display: grid; gap: clamp(14px, 1.6vw, 24px); counter-reset: card; }
@@ -575,6 +597,7 @@ html:not(.js) .reel__nav { display: none; }
 html:not(.js) .shot { pointer-events: none; }
 
 @media print {
+  .ptw__old::after { transform: rotate(-4deg) !important; } .ptw__new b { opacity: 1 !important; transform: rotate(-6deg) !important; }
   .js .rv, .js .rv .ln > span, .js .feat__num, .js .feat__tag, .js .feat__text, .js .feat__title, .scrub .w, .card, .shot, .mega { opacity: 1 !important; transform: none !important; clip-path: none !important; }
   .nav, .bar, .embers, .hero__depth, .fx, .torch, .hero__down, .hero__fog, .frame, .tick, .motion, .lb, .skip, .grow__city, .feat__ghost, .reel__nav, .foot__mega, .foot__top { display: none !important; }
   body::after { display: none; }
