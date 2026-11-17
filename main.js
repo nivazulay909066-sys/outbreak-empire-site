@@ -18,6 +18,7 @@
   var world = $('.world'), worldBg = $('.world__bg'), scrub = $('.scrub');
   var feats = $$('.feat'), featsBox = $('.feats');
   var grow = $('.grow'), pin = $('.grow__pin'), gWords = $$('.grow__word span'), gSteps = $$('.grow__steps li');
+  var dock = $('.dock');
   var pre = $('.pre'), preImg = $('.pre__bg img'), footMega = $('.foot__mega span');
   function clearProps(el, names) { if (el) names.forEach(function (n) { el.style.removeProperty(n); }); }
 
@@ -278,6 +279,10 @@
     if (bar) bar.style.transform = 'scaleX(' + (max > 0 ? clamp(y / max) : 0).toFixed(4) + ')';
     if (nav) nav.classList.toggle('is-solid', y > 40);
     mark(vh, max > 0 && y >= max - 2);
+    if (dock && hero && pre) {
+      var hb = hero.getBoundingClientRect().bottom, pt = pre.getBoundingClientRect().top;
+      dock.classList.toggle('is-on', hb < vh * .35 && pt > vh * .8);
+    }
     if (still) return;
 
     if (hero && y < vh * 1.3) { heroSy = clamp(y / vh); hero.style.setProperty('--sy', heroSy.toFixed(3)); }
