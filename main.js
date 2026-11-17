@@ -396,25 +396,7 @@
   var cards = $$('.card');
   if (fine) cards.forEach(function (c) { tilt(c, 7, 6); });
 
-  /* ---------- a warm light that follows the pointer over the whole page ---------- */
-  var torch = null;
-  if (fine) {
-    torch = document.createElement('div');
-    torch.className = 'torch'; torch.setAttribute('aria-hidden', 'true');
-    document.body.appendChild(torch);
-    var tq = false, px = 0, py = 0;
-    win.addEventListener('pointermove', function (e) {
-      px = e.clientX; py = e.clientY;
-      if (still || tq) return;
-      tq = true;
-      requestAnimationFrame(function () {
-        tq = false;
-        torch.style.transform = 'translate3d(' + px + 'px,' + py + 'px,0)';
-        torch.classList.add('on');
-      });
-    }, { passive: true });
-    doc.addEventListener('pointerleave', function () { torch.classList.remove('on'); });
-  }
+  var torch = null;   // the flashlight that followed the pointer was removed: the game is strategy, not horror
 
   /* ---------- concept art reel ---------- */
   var reel = $('.reel'), shots = $$('.shot'), frames = reel ? $$('li', reel) : [], dragged = false, fq = false;
@@ -573,7 +555,7 @@
 
   /* ---------- start ---------- */
   startCity();
-  if (document.readyState === 'complete') soon(); else win.addEventListener('load', soon);
+  // gl.js (the depth effect on the opening picture) is no longer loaded: it drew streaks on some screens and is heavy on phones.
   if (still) setStill(true); else { update(); play(); }
   win.addEventListener('scroll', queue, { passive: true });
   win.addEventListener('resize', function () {
