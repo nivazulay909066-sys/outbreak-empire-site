@@ -569,3 +569,29 @@ html:not(.js) .shot { pointer-events: none; }
 .feat { box-shadow: 0 -30px 70px rgba(8,14,22,.6); }
 .ptw { background: radial-gradient(60% 55% at 15% 30%, rgba(60,110,160,.22), rgba(60,110,160,0) 70%), var(--bg); }
 .card { border-radius: 8px; border-color: rgba(244,184,48,.22); }
+
+/* ---------- share: tell a friend (plain links; the site learns nothing about what is shared) ---------- */
+.ico--share { --s: url("assets/icons/share.svg"); }
+.ico--link { --s: url("assets/icons/link.svg"); }
+.share { margin-top: clamp(40px, 5vw, 64px); }
+.share__h { margin: 0 0 18px; font: 600 clamp(20px, 2vw, 26px)/1.25 var(--cond); letter-spacing: .02em; color: var(--ink); }
+.share__list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+.share__btn { display: inline-flex; align-items: center; gap: 9px; min-height: 46px; padding: 0 18px; border: 1px solid rgba(244,184,48,.45); border-radius: 8px; background: rgba(24,36,50,.8);
+  color: var(--ink); font: 600 16px/1 var(--cond); letter-spacing: .06em; text-transform: uppercase; cursor: pointer; transition: background .25s, color .25s, border-color .25s; }
+.share__btn .ico { width: 18px; height: 18px; color: var(--orange); transition: color .25s; }
+.share__btn:hover, .share__btn:focus-visible { background: var(--orange); border-color: var(--orange); color: #0e1622; }
+.share__btn:hover .ico, .share__btn:focus-visible .ico { color: #0e1622; }
+.share__ok { min-height: 1.4em; margin: 12px 0 0; color: var(--hi); font-size: 15px; }
+
+/* ---------- press kit ---------- */
+.kit__facts { display: grid; grid-template-columns: max-content 1fr; gap: 10px 22px; margin: 14px 0 0; }
+.kit__facts dt { font: 700 15px/1.7 var(--cond); text-transform: uppercase; letter-spacing: .06em; color: var(--hi); }
+.kit__facts dd { margin: 0; color: #d6d0c3; font-size: 16px; line-height: 1.7; }
+@media (max-width: 520px) { .kit__facts { grid-template-columns: 1fr; gap: 0; } .kit__facts dd + dt { margin-top: 10px; } }
+.doc ul.kit__shots li { margin: 0; }
+.doc ul.kit__shots { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin-top: 16px; }
+.doc .kit__shot { display: block; text-decoration: none; color: var(--ink); border: 1px solid rgba(244,184,48,.35); border-radius: 10px; overflow: hidden; background: var(--bg2); transition: border-color .25s; }
+.doc .kit__shot:hover, .doc .kit__shot:focus-visible { border-color: var(--orange); }
+.kit__shot img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+.kit__shot span { display: block; padding: 10px 12px; font-size: 14px; line-height: 1.4; }
+.kit__shot small { color: var(--muted); }

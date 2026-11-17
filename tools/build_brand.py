@@ -91,6 +91,15 @@ def main():
     # browsers and crawlers ask for /favicon.ico whatever the page says
     monogram(48, 8).save(ROOT / "favicon.ico", sizes=[(16, 16), (32, 32), (48, 48)])
     share_image().save(OUT / "og.jpg", "JPEG", quality=86, optimize=True, progressive=True)
+    # the press kit: the logo on clear and on dark ground, and a square icon
+    press = OUT / "press"
+    press.mkdir(exist_ok=True)
+    mark = lockup(1400)
+    mark.save(press / "outbreak-empire-logo.png", optimize=True)
+    dark = Image.new("RGBA", (mark.width + 240, mark.height + 240), BG + (255,))
+    dark.alpha_composite(mark, (120, 120))
+    dark.convert("RGB").save(press / "outbreak-empire-logo-dark.png", optimize=True)
+    monogram(1024, 190).save(press / "outbreak-empire-icon.png", optimize=True)
     for n in ["favicon-32.png", "favicon-192.png", "apple-touch-icon.png", "og.jpg"]:
         print(f"  {n:22} {(OUT / n).stat().st_size // 1024} KB")
 

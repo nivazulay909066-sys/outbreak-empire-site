@@ -1,0 +1,18 @@
+# Outbreak Empire
+
+> Outbreak Empire is a zombie survival strategy game for Android and iOS, in development by an independent developer based in Israel. It is free, with no in-app purchases at all: pure play to win. There is no release date yet; a closed test comes first, and players are invited from the waitlist.
+
+Players build and grow a settlement in a ruined city, take in survivors and put them to work, hold their walls against zombie hordes, and defend against or attack other players on a live map. They can join or found a coalition and plan their wars together.
+
+## Pages
+
+- [Home](https://outbreakempire.com/): the game, the play to win promise, concept art, FAQ and the waitlist
+- [Press kit](https://outbreakempire.com/press/): fact sheet, descriptions, logo and key art
+- [Devlog](https://outbreakempire.com/devlog/): development notes
+
+## Community
+
+- [Discord](https://discord.gg/R8zea6GDbc)
+- [X](https://x.com/OutbreakEmpGame)
+- [TikTok](https://www.tiktok.com/@playoutbreakempire)
+- [Reddit](https://www.reddit.com/user/OutbreakEmpire)

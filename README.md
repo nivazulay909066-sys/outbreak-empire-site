@@ -45,6 +45,14 @@ The phone menu, the gallery arrows and the picture viewer need scripts; without 
 To go back to one of them: `git checkout main && git reset --hard v2-motion && git push --force-with-lease`
 (use `v1-original` for the first one), or copy files from the tag.
 
+## Reach (search, sharing, press)
+- Press kit: `press/index.html` (fact sheet, descriptions, logo files in `images/press/`, concept art). The logo files are made by `tools/build_brand.py`.
+- Share buttons in the Community section: plain links to WhatsApp, X, Reddit, Facebook and Telegram, plus copy-link and the phone's own share menu (shown only where the browser supports them). No third-party scripts.
+- `index.html` has VideoGame and FAQPage structured data. When you change a FAQ answer, change the matching FAQPage entry too.
+- `llms.txt` is a short summary of the game for AI search tools. Keep it in step with the homepage.
+- `sitemap.xml` lists the homepage, the press kit and the devlog. Update `lastmod` when a page changes.
+- Not done yet (needs the owner's accounts): Google Search Console and Bing Webmaster Tools (verify the site, submit `sitemap.xml`).
+
 ## Devlog
 `devlog/index.html` lists the posts; `devlog/post-template.html` is the layout for one post (it is marked noindex, so the empty template stays out of search).
 To add a post: copy the template to `devlog/<slug>.html`, fill every [BRACKETED] part, delete the noindex line,

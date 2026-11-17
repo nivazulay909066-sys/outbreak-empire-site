@@ -494,6 +494,21 @@
   }
   if (motionQ.addEventListener) motionQ.addEventListener('change', function (e) { setStill(e.matches); });
 
+  /* ---------- share: the phone's own share sheet, or copy the link ---------- */
+  var shNative = $('.share__native'), shCopy = $('.share__copy'), shOk = $('.share__ok');
+  var shareData = { title: 'Outbreak Empire', text: 'A zombie strategy game for Android and iOS with no in-app purchases. Join the closed test waitlist:', url: 'https://outbreakempire.com/' };
+  if (shNative && navigator.share) {
+    shNative.hidden = false;
+    shNative.addEventListener('click', function () { navigator.share(shareData).catch(function () {}); });
+  }
+  if (shCopy && navigator.clipboard && win.isSecureContext) {
+    shCopy.hidden = false;
+    shCopy.addEventListener('click', function () {
+      navigator.clipboard.writeText(shareData.url).then(function () { if (shOk) shOk.textContent = 'Link copied. Paste it anywhere.'; },
+        function () { if (shOk) shOk.textContent = 'Could not copy. The address is outbreakempire.com'; });
+    });
+  }
+
   /* ---------- start ---------- */
   startCity();
   if (still) setStill(true); else { update(); play(); }
