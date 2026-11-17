@@ -88,10 +88,17 @@ main:focus { outline: none; }
 .btn__t::after { content: ""; width: .5em; height: .5em; margin-left: .7em; border-top: 3px solid; border-right: 3px solid; transform: rotate(45deg); transition: transform .3s var(--ease); }
 .btn:hover { transform: translateY(-2px); filter: drop-shadow(0 14px 38px rgba(255, 110, 20, .6)) brightness(1.06); }
 .btn:hover .btn__t::after { transform: translateX(5px) rotate(45deg); }
-.btn--lg { font-size: clamp(22px, 2.1vw, 28px); padding: 24px 52px; }
+.btn--lg { font-size: clamp(20px, 1.9vw, 25px); padding: 22px 46px; }
 .btn--lg, .btn--dock { filter: drop-shadow(0 0 22px rgba(255,140,30,.55)) drop-shadow(0 10px 26px rgba(255,110,20,.4)); }
-.js:not(.still) .btn--lg, .js:not(.still) .btn--dock { animation: call 2.4s ease-in-out infinite; }
-@keyframes call { 0%, 100% { filter: drop-shadow(0 0 14px rgba(255,140,30,.4)) drop-shadow(0 10px 26px rgba(255,110,20,.35)); } 50% { filter: drop-shadow(0 0 34px rgba(255,170,60,.85)) drop-shadow(0 10px 30px rgba(255,110,20,.55)); } }
+/* the waitlist buttons call the player: a double beat with a flash of light, then a fast sweep of shine */
+.js:not(.still) .btn--lg, .js:not(.still) .btn--dock { animation: call 2.6s ease-in-out infinite; }
+.js:not(.still) .btn--lg::after, .js:not(.still) .btn--dock::after, .js:not(.still) .btn--sm::after { animation: shine 2.6s ease-in-out .3s infinite; }
+@keyframes call {
+  0%, 40%, 100% { transform: none; filter: drop-shadow(0 0 12px rgba(255,140,30,.35)) drop-shadow(0 10px 26px rgba(255,110,20,.35)) brightness(1); }
+  8% { transform: scale(1.06); filter: drop-shadow(0 0 40px rgba(255,190,80,1)) drop-shadow(0 10px 30px rgba(255,110,20,.6)) brightness(1.22); }
+  16% { transform: none; filter: drop-shadow(0 0 18px rgba(255,150,40,.5)) drop-shadow(0 10px 26px rgba(255,110,20,.4)) brightness(1.05); }
+  24% { transform: scale(1.04); filter: drop-shadow(0 0 32px rgba(255,180,70,.9)) drop-shadow(0 10px 30px rgba(255,110,20,.55)) brightness(1.15); }
+}
 .btn--lg:hover, .btn--dock:hover { animation: none; }
 .cta__note { font: 600 15px/1.2 var(--cond); letter-spacing: .14em; text-transform: uppercase; color: #fff; text-shadow: 0 1px 10px #000; }
 .btn--xl { font-size: clamp(22px, 2.5vw, 34px); padding: clamp(22px, 2.2vw, 32px) clamp(40px, 5vw, 76px); }
