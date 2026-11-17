@@ -22,30 +22,25 @@ Icons: Simple Icons (CC0).
 
 ## Logo and brand files
 
-The logo is live text set in Anton (`.wm` in `style.css`): OUTBREAK in bone white over EMPIRE in the fire gradient.
+The look follows the game's own screens: slate-blue panels, gold accents, a tactical map, clear daylight (no horror effects).
+The logo is live text set in Anton (`.wm` in `style.css`): OUTBREAK in bone white over EMPIRE in the gold gradient.
 `python -I tools/build_brand.py` (run it **after** `build_images.py`) writes the files text cannot reach:
-the browser-tab icons `favicon-32.png` and `favicon-192.png`, `apple-touch-icon.png`, the share image `og.jpg`,
-the wear mask `wear.png` on the hero title, the film grain `grain.png` and `hero-depth.jpg`,
-a rough hand-drawn depth map of the hero picture (white = close). If the hero picture changes, redraw the shapes in `hero_depth()`.
+the browser-tab icons `favicon-32.png` and `favicon-192.png`, `apple-touch-icon.png`, `favicon.ico` and the share image `og.jpg`.
 
 ## Motion
 One switch turns every moving effect off: the class `still` on `<html>`. It is set before first paint when the device asks
 for reduced motion, and by the "Pause motion" button. The choice is not saved, because the privacy policy says the site
 stores nothing on the device. Keep it that way, or change the policy first.
 
-## 3D scenes
-`gl.js` draws two scenes with plain WebGL2, no library: the hero picture with depth (it uses `images/hero-depth.jpg`)
-and the settlement that grows from camp to metropolis as the page scrolls. `main.js` owns scrolling, the menu, the gallery and the motion switch.
-`gl.js` is not in the page's HTML: `main.js` fetches it after the page has loaded, when the browser is idle, and only where WebGL2 exists, so it never slows the first screen.
-Until it arrives, and where WebGL2 is missing or fails, the page falls back to the flat versions on its own.
-To see that fallback, add `?gl=off` to the address. With the motion switch off, the city is one finished picture and the moving layers are hidden.
+## Scripts
+`main.js` owns scrolling, the menu, the gallery, the sparks and the motion switch. There is no WebGL any more.
 The phone menu, the gallery arrows and the picture viewer need scripts; without scripts the page hides them and stays readable.
 
 ## Earlier designs
 - First design: tag `v1-original`, branch `design-v1-original`.
 - Second design (large type, scroll motion, no 3D): tag `v2-motion`, branch `redesign-v2`.
 - Third design (3D, as first published): tag `v3-3d`.
-- Copies of the first two are published at `/v1/` and `/v2/`, kept out of search results with noindex.
+- The old copies at `/v1/` and `/v2/` were taken off the site on November 17, 2026: they carried old privacy and accessibility pages. They live on in the tags above.
 
 To go back to one of them: `git checkout main && git reset --hard v2-motion && git push --force-with-lease`
 (use `v1-original` for the first one), or copy files from the tag.
@@ -82,7 +77,7 @@ Visit statistics: Cloudflare Web Analytics, a snippet before `</body>` on every 
 
 ## Google Form changes (for whoever edits the form)
 1. Form description: "We use your answers only to email you about Outbreak Empire (closed test, launch and game news). You don't have to give us this information, but we need your email to add you. Privacy Policy: https://outbreakempire.com/privacy.html". When the sender's name and address exist, add them here (see above).
-2. First question, required, multiple choice, neutral (it must not hint at the right answer): "What is your age?" with "Under 13", "13-15", "16-17", "18-24", "25-34", "35-44", "45 or older". "Under 13" and "13-15" go to a closing section ("Sorry, the waitlist is for players aged 16 or older.") and never reach the email field.
+2. First question, required, multiple choice, neutral (it must not hint at the right answer): "How old are you?" with "Under 16", "16–18", "Over 18" (as the form stands on November 17, 2026). "Under 16" goes to a closing section ("Sorry, the waitlist is for players aged 16 or older.") and never reach the email field.
 3. Required checkbox, not pre-ticked: "I agree to receive emails, including promotional emails, about Outbreak Empire. I can unsubscribe at any time."
 4. Required checkbox: "I have read the Privacy Policy."
 

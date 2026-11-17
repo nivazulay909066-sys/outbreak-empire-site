@@ -9,9 +9,6 @@
   // "still" = motion is off. It starts from the device setting; the button on the page switches it.
   // The choice is not saved: the site stores nothing on the visitor's device.
   var still = doc.classList.contains('still');
-  // The two WebGL scenes live in gl.js, fetched only after the page has loaded and only where WebGL2 exists.
-  // Until it arrives (or if it never does) the flat versions show. Adding ?gl=off to the address keeps them, to test the fallback.
-  var GL = null, glWanted = !/[?&]gl=off\b/.test(location.search) && 'WebGL2RenderingContext' in win;
 
   var nav = $('.nav'), bar = $('.bar i'), hero = $('.hero'), main = $('main'), foot = $('.foot');
   var tick = $('.tick'), tickRow = $('.tick__row');
@@ -40,7 +37,6 @@
     if ('IntersectionObserver' in win) new IntersectionObserver(function (es) { a.on = es[es.length - 1].isIntersecting; play(); }).observe(el);
     return a;
   }
-  function retire(a) { var i = actors.indexOf(a); if (i >= 0) actors.splice(i, 1); }
   document.addEventListener('visibilitychange', play);
 
   /* ---------- text that lights up word by word ---------- */
@@ -166,8 +162,8 @@
   }
 
   /* ---------- the settlement that grows ----------
-     Normally a WebGL scene (gl.js). Without WebGL2 it is the flat map of lights drawn below. */
-  var city = $('.grow__city'), city3 = null, cityActor = null, gTarget = 0, gSmooth = 0;
+     A flat map of lights drawn on a canvas. */
+  var city = $('.grow__city');
   var cctx = null, cells = [], rings = [], CS = 1200, CN = 48;
   function rng(a) {
     return function () {
@@ -233,41 +229,18 @@
       ring.pts.forEach(function (pt) { cctx.fillRect(pt[0] - 5, pt[1] - 5, 10, 10); });
     }
   }
-  // A canvas keeps the first kind of context it was asked for, so the flat map gets a fresh one.
-  function flatCity() {
-    if (cityActor) { retire(cityActor); cityActor = null; }
-    city3 = null;
-    pin.classList.remove('grow--3d');
-    var fresh = city.cloneNode(false);
-    city.parentNode.replaceChild(fresh, city);
-    city = fresh;
-    buildCity();
-  }
   function startCity() {
-    if (!city || !pin) return;
-    if (!GL) { buildCity(); return; }
-    // The flat map already holds a 2D context, so the 3D scene gets a fresh canvas.
-    var fresh = city.cloneNode(false);
-    city.parentNode.replaceChild(fresh, city);
-    city = fresh; cctx = null;
-    city3 = GL.city(city, function () { flatCity(); gp = -1; if (still) setGrow(1); else queue(); });
-    if (!city3) { flatCity(); return; }
-    pin.classList.add('grow--3d');
-    cityActor = actor(pin, function (now, k) {
-      gSmooth += (gTarget - gSmooth) * Math.min(1, .1 * k);
-      city3.draw(gSmooth, now / 1000, true);
-    });
+    if (city && pin) buildCity();
   }
   var gp = -1;
   function setGrow(p) {
     if (!pin || Math.abs(p - gp) < .0015) return;
-    gp = p; gTarget = p;
+    gp = p;
     var q = p * 4.2, stage = Math.min(3, Math.floor(q));
     pin.style.setProperty('--gp', p.toFixed(3));
     gWords.forEach(function (w, k) { w.classList.toggle('on', k === stage); w.classList.toggle('was', k < stage); });
     gSteps.forEach(function (li, k) { li.classList.toggle('on', k <= stage); li.style.setProperty('--f', clamp(q - k).toFixed(3)); });
-    if (!city3) drawCity(p);
-    else if (still) { gSmooth = p; city3.draw(p, 0, false); }   // with motion off: one finished picture
+    drawCity(p);
   }
 
   /* ---------- everything that follows the scroll, in one pass per frame ---------- */
@@ -326,9 +299,8 @@
     }
   }
 
-  /* ---------- hero: sparks, depth in the picture, and layers that follow the pointer ---------- */
-  var mx = 0, my = 0, tx = 0, ty = 0, depth = null;
-  var heroBg = $('.hero__bg'), heroImg = $('.hero__bg img'), depthC = $('.hero__depth');
+  /* ---------- hero: sparks and layers that follow the pointer ---------- */
+  var mx = 0, my = 0, tx = 0, ty = 0;
   if (hero) {
     var sparks = particles($('.embers'), { count: function (w) { return Math.min(96, Math.max(34, w / 15)); } });
     actor(hero, function (now, k) {
@@ -337,7 +309,6 @@
         hero.style.setProperty('--mx', mx.toFixed(3)); hero.style.setProperty('--my', my.toFixed(3));
       }
       if (sparks) sparks.step(k, mx);
-      if (depth) depth.draw(mx, my, heroSy, now / 1000);
     });
     if (fine) hero.addEventListener('pointermove', function (e) {
       tx = (e.clientX / win.innerWidth - .5) * 2; ty = (e.clientY / win.innerHeight - .5) * 2;
@@ -395,8 +366,6 @@
   }
   var cards = $$('.card');
   if (fine) cards.forEach(function (c) { tilt(c, 7, 6); });
-
-  var torch = null;   // the flashlight that followed the pointer was removed: the game is strategy, not horror
 
   /* ---------- concept art reel ---------- */
   var reel = $('.reel'), shots = $$('.shot'), frames = reel ? $$('li', reel) : [], dragged = false, fq = false;
@@ -511,7 +480,6 @@
       feats.forEach(function (f) { clearProps(f, ['--en', '--cov', '--px', '--py']); });
       shots.concat(cards).forEach(function (s) { clearProps(s, TILT); });
       frames.forEach(function (li) { clearProps(li, ['--cy', '--cz']); });
-      if (torch) torch.classList.remove('on');
       light(words.length);
       setGrow(1);
     } else {
@@ -526,36 +494,8 @@
   }
   if (motionQ.addEventListener) motionQ.addEventListener('change', function (e) { setStill(e.matches); });
 
-  /* ---------- the WebGL scenes, fetched late ---------- */
-  function startDepth() {
-    if (!GL || !hero || !depthC || !heroImg) return;
-    depth = GL.depth(depthC, heroImg, 'images/hero-depth.jpg', function () {
-      depth.draw(mx, my, heroSy, 0);          // one frame first, so the canvas never fades in empty
-      heroBg.classList.add('is-3d');
-      play();
-    }, function () { heroBg.classList.remove('is-3d'); depth = null; });
-  }
-  var glAsked = false;
-  function fetchGL() {
-    if (glAsked || !glWanted) return;
-    glAsked = true;
-    var sc = document.createElement('script');
-    sc.src = 'gl.js';
-    sc.onload = function () {
-      GL = win.OEGL || null;
-      if (!GL) return;
-      startDepth();
-      startCity();
-      gp = -1;
-      if (still) setGrow(1); else { queue(); play(); }
-    };
-    document.head.appendChild(sc);
-  }
-  function soon() { if (win.requestIdleCallback) win.requestIdleCallback(fetchGL, { timeout: 1500 }); else setTimeout(fetchGL, 200); }
-
   /* ---------- start ---------- */
   startCity();
-  // gl.js (the depth effect on the opening picture) is no longer loaded: it drew streaks on some screens and is heavy on phones.
   if (still) setStill(true); else { update(); play(); }
   win.addEventListener('scroll', queue, { passive: true });
   win.addEventListener('resize', function () {
