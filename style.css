@@ -592,6 +592,6 @@ html:not(.js) .shot { pointer-events: none; }
 .doc ul.kit__shots { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin-top: 16px; }
 .doc .kit__shot { display: block; text-decoration: none; color: var(--ink); border: 1px solid rgba(244,184,48,.35); border-radius: 10px; overflow: hidden; background: var(--bg2); transition: border-color .25s; }
 .doc .kit__shot:hover, .doc .kit__shot:focus-visible { border-color: var(--orange); }
-.kit__shot img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+.kit__shot img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
 .kit__shot span { display: block; padding: 10px 12px; font-size: 14px; line-height: 1.4; }
 .kit__shot small { color: var(--muted); }
