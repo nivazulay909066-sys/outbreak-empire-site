@@ -494,6 +494,110 @@
   }
   if (motionQ.addEventListener) motionQ.addEventListener('change', function (e) { setStill(e.matches); });
 
+  /* ---------- waitlist: signup on the page, stored in the existing Google Form ----------
+     Entry ids checked against the live viewform FB_PUBLIC_LOAD_DATA_ on 2026-11-20:
+     828189020 email, 742694522 discord, 1870880655 how heard, 2041973297 closed test (Yes/No).
+     pageHistory 0,1 walks the optional age section and the details section. Age, language and the consent checkboxes are not sent. */
+  var wait = $('#waitlist');
+  if (wait) {
+    var waitBtn = $('.wait__send', wait);
+    var waitEmail = $('#wait-email');
+    var waitDiscord = $('#wait-discord');
+    var waitHeard = $('#wait-heard');
+    var waitHp = $('#wait-hp');
+    var waitEmailErr = $('#wait-email-err');
+    var waitClosedErr = $('#wait-closed-err');
+    var waitNet = $('#wait-net');
+    var waitTest = $('.wait__test', wait);
+    var waitClosed = $$('input[name="closed"]', wait);
+    var waitLabel = $('.btn__t', waitBtn);
+    var waitLabelText = waitLabel.textContent;
+    var waitSending = false;
+    var waitEmailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    function waitMsg(el, err, msg) {
+      if (!el || !err) return;
+      var next = msg || '';
+      if ((err.textContent || '') === next && err.hidden === !next) return;
+      if (next) {
+        err.textContent = next;
+        err.hidden = false;
+        err.setAttribute('role', 'alert');
+        el.setAttribute('aria-invalid', 'true');
+      } else {
+        err.textContent = '';
+        err.hidden = true;
+        err.removeAttribute('role');
+        el.removeAttribute('aria-invalid');
+      }
+    }
+    function waitChoice() {
+      var i;
+      for (i = 0; i < waitClosed.length; i++) if (waitClosed[i].checked) return waitClosed[i].value;
+      return '';
+    }
+    function waitValidate(move) {
+      var email = waitEmail.value.trim();
+      var emailMsg = '';
+      var closedMsg = '';
+      var choice = waitChoice();
+      if (!email) emailMsg = 'Enter your email address.';
+      else if (email.length > 254 || !waitEmailOk.test(email)) emailMsg = 'Enter a valid email address.';
+      if (choice !== 'Yes' && choice !== 'No') closedMsg = 'Choose Yes or No.';
+      waitMsg(waitEmail, waitEmailErr, emailMsg);
+      waitMsg(waitTest, waitClosedErr, closedMsg);
+      if (move && emailMsg) waitEmail.focus();
+      else if (move && closedMsg) (waitClosed[0] || waitTest).focus();
+      return !emailMsg && !closedMsg;
+    }
+    function waitThanks() {
+      var done = $('#wait-thanks');
+      wait.hidden = true;
+      if (!done) return;
+      done.hidden = false;
+      done.focus();
+    }
+    function waitFail() {
+      waitSending = false;
+      waitBtn.disabled = false;
+      wait.setAttribute('aria-busy', 'false');
+      waitLabel.textContent = waitLabelText;
+      waitNet.hidden = false;
+    }
+    waitEmail.addEventListener('input', function () {
+      if (waitEmail.getAttribute('aria-invalid') === 'true') waitValidate(false);
+    });
+    waitClosed.forEach(function (r) {
+      r.addEventListener('change', function () {
+        if (waitTest.getAttribute('aria-invalid') === 'true') waitValidate(false);
+      });
+    });
+    wait.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (waitSending) return;
+      waitNet.hidden = true;
+      if (!waitValidate(true)) return;
+      if (waitHp && waitHp.value.trim()) { waitThanks(); return; }
+      waitSending = true;
+      waitBtn.disabled = true;
+      wait.setAttribute('aria-busy', 'true');
+      waitLabel.textContent = 'Sending';
+      var body = new URLSearchParams();
+      body.set('entry.828189020', waitEmail.value.trim());
+      body.set('entry.742694522', waitDiscord.value.trim());
+      body.set('entry.1870880655', waitHeard.value.trim());
+      body.set('entry.2041973297', waitChoice());
+      body.set('pageHistory', '0,1');
+      body.set('fvv', '1');
+      body.set('submissionTimestamp', '-1');
+      fetch('https://docs.google.com/forms/d/e/1FAIpQLSfH-3bDS25boa_nsmfyrVO0cmh-lTgv2Yjuh53AL0fX4bEYbQ/formResponse', {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: body.toString()
+      }).then(function () { waitThanks(); }).catch(waitFail);
+    });
+  }
+
   /* ---------- share: the phone's own share sheet, or copy the link ---------- */
   var shNative = $('.share__native'), shCopy = $('.share__copy'), shOk = $('.share__ok');
   var shareData = { title: 'Outbreak Empire', text: 'A zombie strategy game for Android and iOS with no in-app purchases. Join the closed test waitlist:', url: 'https://outbreakempire.com/' };

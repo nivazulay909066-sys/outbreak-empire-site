@@ -73,9 +73,9 @@ The site names no person yet. That is fine for the pages themselves, but marketi
 ## Record of processing (keep this up to date)
 | | |
 |---|---|
-| Data | email, age group, preferred language, Discord username (optional), how they heard of us (optional) |
+| Data | email (required), whether they want to join the closed test (yes or no), Discord username (optional), how they heard of us (optional). The website does not ask age, preferred language, or consent checkboxes. |
 | Why | emailing the waitlist about the closed test, the launch and game news |
-| Legal basis | consent (form checkbox) |
+| Legal basis | consent (sending the signup form on the site) |
 | Where | Google Forms and its responses sheet; Gmail for sent mail and replies |
 | Who sees it | the developer only |
 | How long | until unsubscribe or deletion request; at most 12 months after launch; within 30 days if development stops |
@@ -85,9 +85,8 @@ Visit statistics: Cloudflare Web Analytics, a snippet before `</body>` on every 
 
 ## Google Form changes (for whoever edits the form)
 1. Form description: "We use your answers only to email you about Outbreak Empire (closed test, launch and game news). You don't have to give us this information, but we need your email to add you. Privacy Policy: https://outbreakempire.com/privacy.html". When the sender's name and address exist, add them here (see above).
-2. First question, required, multiple choice, neutral (it must not hint at the right answer): "How old are you?" with "Under 16", "16–18", "Over 18" (as the form stands on November 17, 2026). "Under 16" goes to a closing section ("Sorry, the waitlist is for players aged 16 or older.") and never reach the email field.
-3. Required checkbox, not pre-ticked: "I agree to receive emails, including promotional emails, about Outbreak Empire. I can unsubscribe at any time."
-4. Required checkbox: "I have read the Privacy Policy."
+2. The website signup (home page, `#signup`) posts in the background to this form. It sends only email (`entry.828189020`), Discord username (`entry.742694522`, optional), how they heard of us (`entry.1870880655`, optional) and closed test Yes/No (`entry.2041973297`, exact option text `Yes` or `No`), with `pageHistory=0,1`. It does not send the age question, preferred language, or the consent checkboxes. Those Google Form fields need to stay optional so a row is accepted without them. "Under 16" on the form itself still goes to the closing section ("Sorry, the waitlist is for players aged 16 or older.").
+3. The site asks no age question and shows no consent checkboxes. That is an owner decision (November 20, 2026). Do not turn those Google Form fields required again, or the on-site signup will stop landing in the sheet.
 
 ## Every waitlist email
 - Send one email per person, or put everyone in BCC. Never in To or CC.
