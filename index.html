@@ -144,7 +144,7 @@
       <span class="plat__ios" title="Coming soon on iOS" aria-hidden="true">iOS</span>
       <span class="plat__and" title="Coming soon on Android" aria-hidden="true"><span class="ico ico--android"></span><span class="plat__word">Android</span></span>
     </div>
-    <a class="btn btn--sm" href="https://docs.google.com/forms/d/e/1FAIpQLSfH-3bDS25boa_nsmfyrVO0cmh-lTgv2Yjuh53AL0fX4bEYbQ/viewform" target="_blank" rel="noopener"><span class="btn__t">Join waitlist</span><span class="sr-only"> (opens in a new tab)</span></a>
+    <a class="btn btn--sm" href="#signup"><span class="btn__t">Join waitlist</span></a>
     <button class="nav__menu" type="button" aria-expanded="false" aria-controls="menu" hidden><span class="sr-only">Menu</span><i aria-hidden="true"></i></button>
   </div>
 </header>
@@ -168,7 +168,7 @@
       <h2 class="hero__line">A new kind of strategy game: <b>pure play to win</b></h2>
       <p class="hero__sub">Build and grow your settlement in a ruined city. Survive a world overrun by the dead. Defend your walls, and attack the players who want what is yours.</p>
       <div class="hero__cta">
-        <a class="btn btn--lg" href="https://docs.google.com/forms/d/e/1FAIpQLSfH-3bDS25boa_nsmfyrVO0cmh-lTgv2Yjuh53AL0fX4bEYbQ/viewform" target="_blank" rel="noopener"><span class="btn__t">Join the waitlist</span><span class="sr-only"> (opens in a new tab)</span></a>
+        <a class="btn btn--lg" href="#signup"><span class="btn__t">Join the waitlist</span></a>
         <p class="cta__note">Free. No in&#8209;app purchases.</p>
         <div class="stores">
           <span class="store"><span class="ico ico--phone" aria-hidden="true"></span><span><small>Coming soon on</small>iOS</span></span>
@@ -360,17 +360,54 @@
   </section>
 
   <!-- PRE-REGISTER -->
-  <section class="pre" id="signup">
+  <section class="pre" aria-labelledby="closed-h">
     <div class="pre__bg" aria-hidden="true">
       <picture><source type="image/avif" srcset="images/hero-800.avif 800w, images/hero-1600.avif 1600w" sizes="(max-aspect-ratio: 1/1) 178vh, 100vw"><img src="images/hero-800.webp" srcset="images/hero-800.webp 800w, images/hero-1600.webp 1600w" sizes="(max-aspect-ratio: 1/1) 178vh, 100vw" alt="Survivors leaving the settlement gate at dusk" loading="lazy" decoding="async" width="800" height="450"></picture>
     </div>
     <canvas class="fx" data-fx="embers" aria-hidden="true"></canvas>
     <div class="pre__in">
       <p class="kicker rv"><i aria-hidden="true"></i>Closed test</p>
-      <h2 class="head head--xl rv"><span class="ln"><span>Be first</span></span> <span class="ln"><span>through</span></span> <span class="ln ln--fire"><span>the gate</span></span></h2>
+      <h2 class="head head--xl rv" id="closed-h"><span class="ln"><span>Be first</span></span> <span class="ln"><span>through</span></span> <span class="ln ln--fire"><span>the gate</span></span></h2>
       <p class="pre__lead rv">The closed test comes first, and we invite its players from the waitlist. Join now and be among the first to hear when the gate opens.</p>
-      <div class="pre__cta rv"><a class="btn btn--lg btn--xl" href="https://docs.google.com/forms/d/e/1FAIpQLSfH-3bDS25boa_nsmfyrVO0cmh-lTgv2Yjuh53AL0fX4bEYbQ/viewform" target="_blank" rel="noopener"><span class="btn__t">Join the waitlist</span><span class="sr-only"> (opens in a new tab)</span></a></div>
-      <p class="pre__note">Waitlist open to ages 16 and over. We use your email to tell you about the closed test and launch. Unsubscribe any time. <a href="privacy.html">Privacy Policy</a></p>
+      <div class="wait" id="signup">
+        <form class="wait__form" id="waitlist" method="post" action="#signup" novalidate>
+          <div class="wait__hp" aria-hidden="true">
+            <label for="wait-hp">Company</label>
+            <input id="wait-hp" name="oe_hp" type="text" tabindex="-1" autocomplete="off">
+          </div>
+          <div class="wait__field">
+            <label for="wait-email">Email <span class="wait__req" aria-hidden="true">*</span><span class="sr-only"> required</span></label>
+            <input id="wait-email" name="email" type="email" inputmode="email" autocomplete="email" maxlength="254" spellcheck="false" required aria-required="true" aria-describedby="wait-email-err">
+            <p class="wait__err" id="wait-email-err" hidden></p>
+          </div>
+          <div class="wait__field">
+            <label for="wait-discord">Discord username <span class="wait__opt">(optional)</span></label>
+            <input id="wait-discord" name="discord" type="text" autocomplete="off" maxlength="100" dir="auto">
+          </div>
+          <div class="wait__field">
+            <label for="wait-heard">How did you hear about us? <span class="wait__opt">(optional)</span></label>
+            <input id="wait-heard" name="heard" type="text" autocomplete="off" maxlength="400" dir="auto">
+          </div>
+          <fieldset class="wait__field wait__test" aria-required="true" aria-describedby="wait-closed-err">
+            <legend>Do you want to join the closed test? <span class="wait__req" aria-hidden="true">*</span><span class="sr-only"> required</span></legend>
+            <div class="wait__choices">
+              <label class="wait__choice"><input type="radio" name="closed" value="Yes" required> <span>Yes</span></label>
+              <label class="wait__choice"><input type="radio" name="closed" value="No" required> <span>No</span></label>
+            </div>
+            <p class="wait__err" id="wait-closed-err" hidden></p>
+          </fieldset>
+          <p class="wait__err" id="wait-net" role="alert" hidden>We could not send your signup. Check your connection and try again.</p>
+          <div class="wait__actions">
+            <button class="btn btn--lg wait__send" type="submit"><span class="btn__t">Join the waitlist</span></button>
+          </div>
+        </form>
+        <div class="wait__thanks" id="wait-thanks" role="status" tabindex="-1" hidden>
+          <h3>You're on the list</h3>
+          <p>Thank you. We'll email you when there's news.</p>
+        </div>
+        <p class="wait__privacy"><a href="privacy.html">Privacy Policy</a></p>
+        <p class="pre__note">Waitlist open to ages 16 and over. We use your email to tell you about the closed test and launch. Unsubscribe any time.</p>
+      </div>
     </div>
   </section>
 
@@ -422,7 +459,7 @@
 
 
 <div class="dock" aria-hidden="true">
-  <a class="btn btn--dock" href="https://docs.google.com/forms/d/e/1FAIpQLSfH-3bDS25boa_nsmfyrVO0cmh-lTgv2Yjuh53AL0fX4bEYbQ/viewform" target="_blank" rel="noopener" tabindex="-1"><span class="btn__t">Join the waitlist</span></a>
+  <a class="btn btn--dock" href="#signup" tabindex="-1"><span class="btn__t">Join the waitlist</span></a>
 </div>
 
 <dialog class="lb" aria-label="Image viewer">
