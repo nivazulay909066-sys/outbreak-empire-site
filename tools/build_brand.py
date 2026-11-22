@@ -1,4 +1,4 @@
-"""Build the brand files: favicons and the share image, in the strategy look (slate blue and gold).
+"""Build the brand files: the game icon in every size and the share image, in the strategy look (slate blue and gold).
 
 Usage:  python tools/build_brand.py      (needs: pip install pillow)
 The wordmark is set in Anton (SIL Open Font License, tools/fonts/OFL.txt).
@@ -50,18 +50,13 @@ def lockup(width):
     return im
 
 
-def monogram(size, pad):
-    im = Image.new("RGB", (size, size), BG)
-    o = word("O", size, INK)
-    e = word("E", size, "fire")
-    h = size - 2 * pad
-    o = o.resize((round(o.width * h / o.height), h), Image.LANCZOS)
-    e = e.resize((round(e.width * h / e.height), h), Image.LANCZOS)
-    gap = max(1, round(size * .04))
-    x = (size - (o.width + gap + e.width)) // 2
-    im.paste(o, (x, pad), o)
-    im.paste(e, (x + o.width + gap, pad), e)
-    return im
+def icon(size):
+    """The game icon. Small sizes are cut closer to the face so it still reads in a browser tab."""
+    im = Image.open(ROOT / "images" / "src" / "icon.png").convert("RGB")
+    if size <= 64:
+        w = im.width
+        im = im.crop((round(w * .22), round(w * .08), round(w * .78), round(w * .64)))
+    return im.resize((size, size), Image.LANCZOS)
 
 
 def share_image():
@@ -85,11 +80,12 @@ def share_image():
 
 
 def main():
-    monogram(32, 5).save(OUT / "favicon-32.png", optimize=True)
-    monogram(192, 36).save(OUT / "favicon-192.png", optimize=True)
-    monogram(180, 34).save(OUT / "apple-touch-icon.png", optimize=True)
+    icon(32).save(OUT / "favicon-32.png", optimize=True)
+    icon(192).save(OUT / "favicon-192.png", optimize=True)
+    icon(180).save(OUT / "apple-touch-icon.png", optimize=True)
     # browsers and crawlers ask for /favicon.ico whatever the page says
-    monogram(48, 8).save(ROOT / "favicon.ico", sizes=[(16, 16), (32, 32), (48, 48)])
+    icon(48).save(ROOT / "favicon.ico", sizes=[(16, 16), (32, 32), (48, 48)])
+    icon(96).save(OUT / "icon-96.webp", "WEBP", quality=88, method=6)  # beside the wordmark in the top bar
     share_image().save(OUT / "og.jpg", "JPEG", quality=86, optimize=True, progressive=True)
     # the press kit: the logo on clear and on dark ground, and a square icon
     press = OUT / "press"
@@ -99,7 +95,7 @@ def main():
     dark = Image.new("RGBA", (mark.width + 240, mark.height + 240), BG + (255,))
     dark.alpha_composite(mark, (120, 120))
     dark.convert("RGB").save(press / "outbreak-empire-logo-dark.png", optimize=True)
-    monogram(1024, 190).save(press / "outbreak-empire-icon.png", optimize=True)
+    icon(1024).save(press / "outbreak-empire-icon.png", optimize=True)
     for n in ["favicon-32.png", "favicon-192.png", "apple-touch-icon.png", "og.jpg"]:
         print(f"  {n:22} {(OUT / n).stat().st_size // 1024} KB")
 

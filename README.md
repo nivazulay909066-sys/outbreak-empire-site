@@ -26,6 +26,7 @@ The look follows the game's own screens: slate-blue panels, gold accents, a tact
 The logo is live text set in Anton (`.wm` in `style.css`): OUTBREAK in bone white over EMPIRE in the gold gradient.
 `python -I tools/build_brand.py` (run it **after** `build_images.py`) writes the files text cannot reach:
 the browser-tab icons `favicon-32.png` and `favicon-192.png`, `apple-touch-icon.png`, `favicon.ico` and the share image `og.jpg`.
+The game icon (the survivor at sunset) comes from `images/src/icon.png`: the script cuts it into the browser-tab icons, `icon-96.webp` (beside the wordmark in the top bar) and the press-kit icon. To change the icon, replace that file and run the script.
 
 ## Motion
 One switch turns every moving effect off: the class `still` on `<html>`. It is set before first paint when the device asks
